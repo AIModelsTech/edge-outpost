@@ -18,10 +18,18 @@ export const COMPUTE_OPTIONS = [
     {
         id: 'cluster',
         name: 'Industrial GPU Cluster',
-        subtitle: '275+ TOPS • Multi-modal & LiDAR fusion',
-        shortLabel: 'GPU Cluster 275+ TOPS',
-        tops: '275+ TOPS',
+        subtitle: '275–550 TOPS • Multi-sensor & LiDAR fusion',
+        shortLabel: 'GPU Cluster 550 TOPS',
+        tops: '550 TOPS',
         chassisUnits: 3,
+    },
+    {
+        id: 'thor',
+        name: 'Jetson Thor AI Module',
+        subtitle: 'Up to 2,070 TOPS • Physical AI & multi-modal',
+        shortLabel: 'Jetson Thor 2,070 TOPS',
+        tops: '2,070 TOPS',
+        chassisUnits: 4,
     },
 ];
 
@@ -29,7 +37,7 @@ export const CAMERA_PORT_OPTIONS = [
     {
         id: 'cam-2x',
         name: '2x PoE+ Vision Ports',
-        subtitle: '60W budget • Dual IP68 M12/RJ45 glands',
+        subtitle: '60W budget • Dual sealed M12/RJ45 glands',
         shortLabel: '2x PoE+ Cameras',
         poeCount: 2,
         gmslCount: 0,
@@ -39,7 +47,7 @@ export const CAMERA_PORT_OPTIONS = [
     {
         id: 'cam-4x',
         name: '4x PoE+ Managed Switch',
-        subtitle: '120W budget • Quad IP68 M12/RJ45 glands',
+        subtitle: '120W budget • Quad sealed M12/RJ45 glands',
         shortLabel: '4x PoE+ Cameras',
         poeCount: 4,
         gmslCount: 0,
@@ -49,7 +57,7 @@ export const CAMERA_PORT_OPTIONS = [
     {
         id: 'cam-4x-gmsl',
         name: '4x GMSL2 Coax Ports',
-        subtitle: 'Low-latency SerDes • Quad IP68 FAKRA coax',
+        subtitle: 'Low-latency SerDes • Quad sealed FAKRA coax',
         shortLabel: '4x GMSL2 Coax',
         poeCount: 0,
         gmslCount: 4,

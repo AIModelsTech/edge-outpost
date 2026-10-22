@@ -1,14 +1,14 @@
 # EdgeForge by AIModels Tech
 
-Public product & interactive visual configurator website for **EdgeForge** — AIModels Tech's custom weather-resistant NEMA 4X / IP66 Edge AI enclosures.
+Public product & interactive visual configurator website for **EdgeForge** — AIModels Tech's custom weather-resistant NEMA 4X Edge AI enclosures.
 
 ## Features
 
-- **Interactive NEMA 4X / IP66 Visual Enclosure Configurator**:
+- **Interactive NEMA 4X Visual Enclosure Configurator**:
   - Real-time schematic visualization of internal DIN rails, conduction heatsink fins, status telemetry, bottom waterproof gland plate ports, top N-type 5G MIMO & NTN satellite antennas, pole/wall mounting brackets, and external solar panel array.
   - **Configurable Modules**:
-    - **Edge AI Compute Capacity**: Compact Node (40 TOPS), Mid-Range Multi-Stream AI Module (150 TOPS), or High-Density Industrial GPU Cluster (275–550 TOPS).
-    - **Rugged Camera Ports**: 2x PoE+ (60W), 4x PoE+ Managed (120W), or 8x PoE++ (240W) with IP68 M12 X-Coded / RJ45 glands.
+    - **Edge AI Compute Capacity**: Compact Node (40 TOPS), Mid-Range Multi-Stream AI Module (150 TOPS), Industrial GPU Cluster (275–550 TOPS), or Jetson Thor AI Module (up to 2,070 TOPS).
+    - **Rugged Camera Ports**: 2x PoE+ (60W), 4x PoE+ Managed (120W), 4x GMSL2 Coax, 4x GMSL2 + 4x PoE+ Hybrid, or 8x PoE++ (240W) with sealed M12 / FAKRA / RJ45 glands.
     - **Network Uplink**: Dual 1GbE RJ45, 10GbE + 1GbE Copper, or Dual 10G Rugged Fiber SFP+.
     - **Wireless & Satellite Connectivity**: Industrial 5G Dual-SIM Cellular Modem (4x4 MIMO) and NTN Satellite Transceiver Uplink.
     - **Power & Charging Architecture**: Internal 24V Heated LiFePO4 UPS Battery Bank, Solar Array + MPPT Controller, 12V/24V/48V Alternator DC-DC Charger, and 120/240V Shore/Grid AC-DC Supply.

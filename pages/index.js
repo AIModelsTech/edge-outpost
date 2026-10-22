@@ -50,7 +50,7 @@ export default function HomePage() {
                         </h1>
 
                         <p className="mt-6 text-lg leading-relaxed text-aim-600">
-                            EdgeForge combines NEMA 4X / IP66 weather-sealed housings, conduction-cooled AI compute,
+                            EdgeForge combines NEMA 4X weather-sealed housings, conduction-cooled AI compute,
                             PoE++ and GMSL2 vision ports, 5G and satellite connectivity, and hybrid LiFePO4/solar power
                             in a single deployable system.
                         </p>
@@ -68,20 +68,20 @@ export default function HomePage() {
                     {/* Clean 4-Stat Strip */}
                     <div className="mt-16 grid grid-cols-2 gap-8 border-t border-aim-200 pt-10 sm:grid-cols-4">
                         <div>
-                            <p className="text-2xl font-semibold tracking-tight text-aim-900">NEMA 4X / IP66</p>
+                            <p className="text-2xl font-semibold tracking-tight text-aim-900">NEMA 4X</p>
                             <p className="mt-1 text-sm text-aim-500">Weather &amp; washdown sealed</p>
                         </div>
                         <div>
-                            <p className="text-2xl font-semibold tracking-tight text-aim-900">Up to 550 TOPS</p>
-                            <p className="mt-1 text-sm text-aim-500">On-device AI inference</p>
+                            <p className="text-2xl font-semibold tracking-tight text-aim-900">Up to 2,070 TOPS</p>
+                            <p className="mt-1 text-sm text-aim-500">Compact node to Jetson Thor</p>
                         </div>
                         <div>
                             <p className="text-2xl font-semibold tracking-tight text-aim-900">5G + Satellite</p>
                             <p className="mt-1 text-sm text-aim-500">Redundant remote backhaul</p>
                         </div>
                         <div>
-                            <p className="text-2xl font-semibold tracking-tight text-aim-900">-40°C to +75°C</p>
-                            <p className="mt-1 text-sm text-aim-500">Heated LiFePO4 &amp; solar ready</p>
+                            <p className="text-2xl font-semibold tracking-tight text-aim-900">-30°C to +50°C</p>
+                            <p className="mt-1 text-sm text-aim-500">With optional heating for lower temperature operation</p>
                         </div>
                     </div>
                 </div>

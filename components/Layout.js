@@ -5,7 +5,7 @@ import Footer from './Footer';
 const defaultMeta = {
     title: 'EdgeForge by AIM — Custom Weather-Resistant Edge AI Enclosures',
     description:
-        'Configure custom NEMA 4X / IP66 weather-resistant Edge AI enclosures with DIN-rail compute, PoE++ camera glands, 5G & NTN satellite backhaul, LiFePO4 UPS, and solar/alternator charging.',
+        'Configure custom NEMA 4X weather-resistant Edge AI enclosures with DIN-rail compute up to Jetson Thor (2,070 TOPS), PoE++ & GMSL2 camera glands, 5G & NTN satellite backhaul, LiFePO4 UPS, and solar/alternator charging.',
 };
 
 export default function Layout({ children, title, description }) {

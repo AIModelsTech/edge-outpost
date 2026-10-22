@@ -50,7 +50,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         Enclosure Architecture
                     </h3>
                     <p className="text-xs text-aim-500">
-                        NEMA 4X / IP66 Sealed Chassis • Click any module to configure
+                        NEMA 4X Sealed Chassis • Click any module to configure
                     </p>
                 </div>
                 <span className="rounded-full border border-aim-200 bg-aim-50 px-3 py-1 text-xs font-medium text-aim-700">
@@ -258,13 +258,13 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         >
                             {storageObj.isOnboard ? 'Onboard ≤1TB NVMe' : 'Conduction Cooled'}
                         </text>
-                        <rect x="14" y="78" width="68" height="24" rx="5" fill="#1e293b" />
+                        <rect x="14" y="78" width="72" height="24" rx="5" fill="#1e293b" />
                         <text
-                            x="48"
+                            x="50"
                             y="94"
                             textAnchor="middle"
                             fill="#f8fafc"
-                            fontSize="10"
+                            fontSize="9.5"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -272,14 +272,14 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         </text>
                         {storageObj.isOnboard && (
                             <g
-                                transform="translate(88, 78)"
+                                transform="translate(92, 78)"
                                 onClick={(e) => handleTabClick('storage', e)}
                                 className="cursor-pointer"
                             >
                                 <rect
                                     x="0"
                                     y="0"
-                                    width="46"
+                                    width="42"
                                     height="24"
                                     rx="5"
                                     fill="#334155"
@@ -287,7 +287,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                     strokeWidth="1.5"
                                 />
                                 <text
-                                    x="23"
+                                    x="21"
                                     y="16"
                                     textAnchor="middle"
                                     fill="#e2e8f0"
