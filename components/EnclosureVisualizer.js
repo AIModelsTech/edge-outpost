@@ -1,7 +1,7 @@
 import React from 'react';
 import { resolveConfigDetails } from '../data/enclosureConfig';
 
-export default function EnclosureVisualizer({ config }) {
+export default function EnclosureVisualizer({ config, activeTab = 'compute', onSelectTab }) {
     const details = resolveConfigDetails(config);
     const { computeObj, camerasObj, networkObj, storageObj } = details;
 
@@ -14,6 +14,17 @@ export default function EnclosureVisualizer({ config }) {
         config.cellular5g || config.satelliteNtn || config.wifiBle || config.gnssRtk
     );
     const hasAnyIo = Boolean(config.serialCan || config.digitalAnalogIo);
+
+    const handleTabClick = (tabId, e) => {
+        if (e) e.stopPropagation();
+        if (onSelectTab) onSelectTab(tabId);
+    };
+
+    const isComputeActive = activeTab === 'compute';
+    const isNetworkActive = activeTab === 'network';
+    const isConnectivityActive = activeTab === 'connectivity';
+    const isPowerActive = activeTab === 'power';
+    const isStorageActive = activeTab === 'storage';
 
     const rfModules = [
         { id: 'cellular5g', label: '5G NR', active: Boolean(config.cellular5g) },
@@ -32,13 +43,13 @@ export default function EnclosureVisualizer({ config }) {
     return (
         <div className="rounded-2xl border border-aim-200 bg-white p-5 shadow-sm sm:p-7">
             {/* Minimal Header */}
-            <div className="mb-3 flex items-center justify-between border-b border-aim-100 pb-3">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-aim-100 pb-3">
                 <div>
                     <h3 className="text-base font-semibold text-aim-900">
                         Enclosure Architecture
                     </h3>
                     <p className="text-xs text-aim-500">
-                        NEMA 4X / IP66 Sealed Chassis
+                        NEMA 4X / IP66 Sealed Chassis • Click any module to configure
                     </p>
                 </div>
                 <span className="rounded-full border border-aim-200 bg-aim-50 px-3 py-1 text-xs font-medium text-aim-700">
@@ -55,77 +66,89 @@ export default function EnclosureVisualizer({ config }) {
                     aria-label="EdgeForge Enclosure Diagram"
                 >
                     {/* ================= TOP ANTENNAS (5G, WI-FI/BLE, GNSS RTK, NTN SATELLITE) ================= */}
-                    {/* 1. 5G Cellular MIMO (Center x = 128) */}
-                    <g opacity={config.cellular5g ? 1 : 0.2} className="transition-opacity duration-200">
-                        <rect x="108" y="38" width="14" height="50" rx="7" fill="#0f172a" />
-                        <rect x="134" y="44" width="14" height="44" rx="7" fill="#0f172a" />
-                        <rect x="104" y="84" width="48" height="8" rx="3" fill="#475569" />
-                        <text
-                            x="128"
-                            y="26"
-                            textAnchor="middle"
-                            fill="#0f172a"
-                            fontSize="10.5"
-                            fontWeight="600"
-                            fontFamily="Inter, system-ui, sans-serif"
-                        >
-                            5G MIMO
-                        </text>
-                    </g>
+                    <g
+                        onClick={(e) => handleTabClick('connectivity', e)}
+                        className="cursor-pointer"
+                    >
+                        {/* Transparent hit area for top antennas */}
+                        <rect x="96" y="14" width="430" height="76" fill="transparent" />
 
-                    {/* 2. Wi-Fi 6E & Bluetooth (Center x = 236) */}
-                    <g opacity={config.wifiBle ? 1 : 0.2} className="transition-opacity duration-200">
-                        <rect x="229" y="42" width="14" height="46" rx="7" fill="#0f172a" />
-                        <rect x="220" y="84" width="32" height="8" rx="3" fill="#475569" />
-                        <text
-                            x="236"
-                            y="26"
-                            textAnchor="middle"
-                            fill="#0f172a"
-                            fontSize="10.5"
-                            fontWeight="600"
-                            fontFamily="Inter, system-ui, sans-serif"
-                        >
-                            Wi-Fi / BLE
-                        </text>
-                    </g>
+                        {/* 1. 5G Cellular MIMO (Center x = 128) */}
+                        <g opacity={config.cellular5g ? 1 : 0.25} className="transition-opacity duration-200">
+                            <rect x="108" y="38" width="14" height="50" rx="7" fill="#0f172a" />
+                            <rect x="134" y="44" width="14" height="44" rx="7" fill="#0f172a" />
+                            <rect x="104" y="84" width="48" height="8" rx="3" fill="#475569" />
+                            <text
+                                x="128"
+                                y="26"
+                                textAnchor="middle"
+                                fill="#0f172a"
+                                fontSize="10.5"
+                                fontWeight="600"
+                                fontFamily="Inter, system-ui, sans-serif"
+                            >
+                                5G MIMO
+                            </text>
+                        </g>
 
-                    {/* 3. GNSS / RTK Multi-Band Puck (Center x = 344) */}
-                    <g opacity={config.gnssRtk ? 1 : 0.2} className="transition-opacity duration-200">
-                        <path d="M 320 84 C 320 62, 368 62, 368 84 Z" fill="#0f172a" />
-                        <rect x="330" y="84" width="28" height="8" rx="3" fill="#475569" />
-                        <text
-                            x="344"
-                            y="26"
-                            textAnchor="middle"
-                            fill="#0f172a"
-                            fontSize="10.5"
-                            fontWeight="600"
-                            fontFamily="Inter, system-ui, sans-serif"
-                        >
-                            GNSS RTK
-                        </text>
-                    </g>
+                        {/* 2. Wi-Fi 6E & Bluetooth (Center x = 236) */}
+                        <g opacity={config.wifiBle ? 1 : 0.25} className="transition-opacity duration-200">
+                            <rect x="229" y="42" width="14" height="46" rx="7" fill="#0f172a" />
+                            <rect x="220" y="84" width="32" height="8" rx="3" fill="#475569" />
+                            <text
+                                x="236"
+                                y="26"
+                                textAnchor="middle"
+                                fill="#0f172a"
+                                fontSize="10.5"
+                                fontWeight="600"
+                                fontFamily="Inter, system-ui, sans-serif"
+                            >
+                                Wi-Fi / BLE
+                            </text>
+                        </g>
 
-                    {/* 4. NTN Satellite Phased Dome (Center x = 468) */}
-                    <g opacity={config.satelliteNtn ? 1 : 0.2} className="transition-opacity duration-200">
-                        <path d="M 422 84 L 434 56 L 502 56 L 514 84 Z" fill="#0f172a" />
-                        <rect x="448" y="84" width="40" height="8" rx="3" fill="#475569" />
-                        <text
-                            x="468"
-                            y="26"
-                            textAnchor="middle"
-                            fill="#0f172a"
-                            fontSize="10.5"
-                            fontWeight="600"
-                            fontFamily="Inter, system-ui, sans-serif"
-                        >
-                            NTN Satellite
-                        </text>
+                        {/* 3. GNSS / RTK Multi-Band Puck (Center x = 344) */}
+                        <g opacity={config.gnssRtk ? 1 : 0.25} className="transition-opacity duration-200">
+                            <path d="M 320 84 C 320 62, 368 62, 368 84 Z" fill="#0f172a" />
+                            <rect x="330" y="84" width="28" height="8" rx="3" fill="#475569" />
+                            <text
+                                x="344"
+                                y="26"
+                                textAnchor="middle"
+                                fill="#0f172a"
+                                fontSize="10.5"
+                                fontWeight="600"
+                                fontFamily="Inter, system-ui, sans-serif"
+                            >
+                                GNSS RTK
+                            </text>
+                        </g>
+
+                        {/* 4. NTN Satellite Phased Dome (Center x = 468) */}
+                        <g opacity={config.satelliteNtn ? 1 : 0.25} className="transition-opacity duration-200">
+                            <path d="M 422 84 L 434 56 L 502 56 L 514 84 Z" fill="#0f172a" />
+                            <rect x="448" y="84" width="40" height="8" rx="3" fill="#475569" />
+                            <text
+                                x="468"
+                                y="26"
+                                textAnchor="middle"
+                                fill="#0f172a"
+                                fontSize="10.5"
+                                fontWeight="600"
+                                fontFamily="Inter, system-ui, sans-serif"
+                            >
+                                NTN Satellite
+                            </text>
+                        </g>
                     </g>
 
                     {/* ================= SIDE SOLAR PANEL SILHOUETTE ================= */}
-                    <g opacity={config.solarMppt ? 1 : 0.18} className="transition-opacity duration-200">
+                    <g
+                        onClick={(e) => handleTabClick('power', e)}
+                        opacity={config.solarMppt ? 1 : 0.22}
+                        className="cursor-pointer transition-opacity duration-200 hover:opacity-90"
+                    >
                         <line x1="560" y1="210" x2="604" y2="210" stroke="#64748b" strokeWidth="4" strokeLinecap="round" />
                         <line x1="560" y1="350" x2="604" y2="350" stroke="#64748b" strokeWidth="4" strokeLinecap="round" />
                         <rect
@@ -135,8 +158,8 @@ export default function EnclosureVisualizer({ config }) {
                             height="290"
                             rx="12"
                             fill="#f8fafc"
-                            stroke="#0f172a"
-                            strokeWidth="2"
+                            stroke={isPowerActive ? '#0284c7' : '#0f172a'}
+                            strokeWidth={isPowerActive ? '2.5' : '2'}
                         />
                         <line x1="666" y1="146" x2="666" y2="374" stroke="#cbd5e1" strokeWidth="1.5" />
                         <line x1="618" y1="202" x2="714" y2="202" stroke="#cbd5e1" strokeWidth="1.5" />
@@ -190,7 +213,23 @@ export default function EnclosureVisualizer({ config }) {
                     <line x1="88" y1="190" x2="532" y2="190" stroke="#cbd5e1" strokeWidth="6" strokeLinecap="round" />
 
                     {/* 1. Compute Module (x=92, width=148) */}
-                    <g transform="translate(92, 132)">
+                    <g
+                        transform="translate(92, 132)"
+                        onClick={(e) => handleTabClick('compute', e)}
+                        className="cursor-pointer"
+                    >
+                        {isComputeActive && (
+                            <rect
+                                x="-3"
+                                y="-3"
+                                width="154"
+                                height="122"
+                                rx="12"
+                                fill="none"
+                                stroke="#0284c7"
+                                strokeWidth="2"
+                            />
+                        )}
                         <rect x="0" y="0" width="148" height="116" rx="10" fill="#0f172a" />
                         <text
                             x="14"
@@ -234,8 +273,21 @@ export default function EnclosureVisualizer({ config }) {
                             {computeObj.tops}
                         </text>
                         {storageObj.isOnboard && (
-                            <g transform="translate(88, 78)">
-                                <rect x="0" y="0" width="46" height="24" rx="5" fill="#334155" />
+                            <g
+                                transform="translate(88, 78)"
+                                onClick={(e) => handleTabClick('storage', e)}
+                                className="cursor-pointer"
+                            >
+                                <rect
+                                    x="0"
+                                    y="0"
+                                    width="46"
+                                    height="24"
+                                    rx="5"
+                                    fill="#334155"
+                                    stroke={isStorageActive ? '#38bdf8' : 'none'}
+                                    strokeWidth="1.5"
+                                />
                                 <text
                                     x="23"
                                     y="16"
@@ -252,7 +304,23 @@ export default function EnclosureVisualizer({ config }) {
                     </g>
 
                     {/* 2. Vision (PoE / GMSL2) & Network Switch Module (x=250, width=146) */}
-                    <g transform="translate(250, 132)">
+                    <g
+                        transform="translate(250, 132)"
+                        onClick={(e) => handleTabClick('network', e)}
+                        className="cursor-pointer"
+                    >
+                        {isNetworkActive && (
+                            <rect
+                                x="-3"
+                                y="-3"
+                                width="152"
+                                height="122"
+                                rx="12"
+                                fill="none"
+                                stroke="#0284c7"
+                                strokeWidth="2"
+                            />
+                        )}
                         <rect
                             x="0"
                             y="0"
@@ -260,7 +328,7 @@ export default function EnclosureVisualizer({ config }) {
                             height="116"
                             rx="10"
                             fill="#f8fafc"
-                            stroke="#0f172a"
+                            stroke={isNetworkActive ? '#0284c7' : '#0f172a'}
                             strokeWidth="1.75"
                         />
                         <text
@@ -322,7 +390,23 @@ export default function EnclosureVisualizer({ config }) {
                     </g>
 
                     {/* 3. RF & Positioning Hub (x=406, width=122) */}
-                    <g transform="translate(406, 132)">
+                    <g
+                        transform="translate(406, 132)"
+                        onClick={(e) => handleTabClick('connectivity', e)}
+                        className="cursor-pointer"
+                    >
+                        {isConnectivityActive && (
+                            <rect
+                                x="-3"
+                                y="-3"
+                                width="128"
+                                height="122"
+                                rx="12"
+                                fill="none"
+                                stroke="#0284c7"
+                                strokeWidth="2"
+                            />
+                        )}
                         <rect
                             x="0"
                             y="0"
@@ -330,7 +414,7 @@ export default function EnclosureVisualizer({ config }) {
                             height="116"
                             rx="10"
                             fill="#f8fafc"
-                            stroke={hasAnyRf ? '#0f172a' : '#cbd5e1'}
+                            stroke={isConnectivityActive ? '#0284c7' : hasAnyRf ? '#0f172a' : '#cbd5e1'}
                             strokeWidth="1.75"
                         />
                         <text
@@ -382,7 +466,23 @@ export default function EnclosureVisualizer({ config }) {
                     <line x1="88" y1="342" x2="532" y2="342" stroke="#cbd5e1" strokeWidth="6" strokeLinecap="round" />
 
                     {/* 1. Storage Bay (x=92, width=104) */}
-                    <g transform="translate(92, 284)">
+                    <g
+                        transform="translate(92, 284)"
+                        onClick={(e) => handleTabClick('storage', e)}
+                        className="cursor-pointer"
+                    >
+                        {isStorageActive && (
+                            <rect
+                                x="-3"
+                                y="-3"
+                                width="110"
+                                height="122"
+                                rx="12"
+                                fill="none"
+                                stroke="#0284c7"
+                                strokeWidth="2"
+                            />
+                        )}
                         <rect
                             x="0"
                             y="0"
@@ -390,9 +490,9 @@ export default function EnclosureVisualizer({ config }) {
                             height="116"
                             rx="10"
                             fill={storageObj.isOnboard ? '#ffffff' : '#f8fafc'}
-                            stroke={storageObj.isOnboard ? '#cbd5e1' : '#0f172a'}
+                            stroke={isStorageActive ? '#0284c7' : storageObj.isOnboard ? '#cbd5e1' : '#0f172a'}
                             strokeWidth="1.75"
-                            strokeDasharray={storageObj.isOnboard ? '4 3' : undefined}
+                            strokeDasharray={storageObj.isOnboard && !isStorageActive ? '4 3' : undefined}
                         />
                         <text
                             x="12"
@@ -474,7 +574,23 @@ export default function EnclosureVisualizer({ config }) {
                     </g>
 
                     {/* 2. Industrial I/O Module: Serial/CAN + DIO/Analog (x=206, width=104) */}
-                    <g transform="translate(206, 284)">
+                    <g
+                        transform="translate(206, 284)"
+                        onClick={(e) => handleTabClick('network', e)}
+                        className="cursor-pointer"
+                    >
+                        {isNetworkActive && (
+                            <rect
+                                x="-3"
+                                y="-3"
+                                width="110"
+                                height="122"
+                                rx="12"
+                                fill="none"
+                                stroke="#0284c7"
+                                strokeWidth="2"
+                            />
+                        )}
                         <rect
                             x="0"
                             y="0"
@@ -482,7 +598,7 @@ export default function EnclosureVisualizer({ config }) {
                             height="116"
                             rx="10"
                             fill="#f8fafc"
-                            stroke={hasAnyIo ? '#0f172a' : '#cbd5e1'}
+                            stroke={isNetworkActive ? '#0284c7' : hasAnyIo ? '#0f172a' : '#cbd5e1'}
                             strokeWidth="1.75"
                         />
                         <text
@@ -548,7 +664,23 @@ export default function EnclosureVisualizer({ config }) {
                     </g>
 
                     {/* 3. Power & Reserve Bay — Non-overlapping 2x2 Grid (x=320, width=208) */}
-                    <g transform="translate(320, 284)">
+                    <g
+                        transform="translate(320, 284)"
+                        onClick={(e) => handleTabClick('power', e)}
+                        className="cursor-pointer"
+                    >
+                        {isPowerActive && (
+                            <rect
+                                x="-3"
+                                y="-3"
+                                width="214"
+                                height="122"
+                                rx="12"
+                                fill="none"
+                                stroke="#0284c7"
+                                strokeWidth="2"
+                            />
+                        )}
                         <rect
                             x="0"
                             y="0"
@@ -556,7 +688,7 @@ export default function EnclosureVisualizer({ config }) {
                             height="116"
                             rx="10"
                             fill="#f8fafc"
-                            stroke="#0f172a"
+                            stroke={isPowerActive ? '#0284c7' : '#0f172a'}
                             strokeWidth="1.75"
                         />
                         <text
@@ -607,7 +739,11 @@ export default function EnclosureVisualizer({ config }) {
                     <rect x="88" y="460" width="444" height="10" rx="4" fill="#0f172a" />
 
                     {/* 1. Camera Gland Indicators (Center x = 152) */}
-                    <g>
+                    <g
+                        onClick={(e) => handleTabClick('network', e)}
+                        className="cursor-pointer"
+                    >
+                        <rect x="92" y="468" width="120" height="46" fill="transparent" />
                         <g transform={`translate(${152 - (totalCameras * 14 - 4) / 2}, 470)`}>
                             {Array.from({ length: totalCameras }).map((_, idx) => {
                                 const isGmslPort = idx < gmslCount;
@@ -630,9 +766,9 @@ export default function EnclosureVisualizer({ config }) {
                             x="152"
                             y="506"
                             textAnchor="middle"
-                            fill="#334155"
+                            fill={isNetworkActive ? '#0284c7' : '#334155'}
                             fontSize="10.5"
-                            fontWeight="500"
+                            fontWeight={isNetworkActive ? '600' : '500'}
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             {camerasObj.glandLabel}
@@ -640,16 +776,20 @@ export default function EnclosureVisualizer({ config }) {
                     </g>
 
                     {/* 2. Network Uplink Gland Indicators (Center x = 276) */}
-                    <g>
+                    <g
+                        onClick={(e) => handleTabClick('network', e)}
+                        className="cursor-pointer"
+                    >
+                        <rect x="236" y="468" width="80" height="46" fill="transparent" />
                         <rect x="260" y="470" width="14" height="16" rx="2.5" fill="#334155" />
                         <rect x="278" y="470" width="14" height="16" rx="2.5" fill="#334155" />
                         <text
                             x="276"
                             y="506"
                             textAnchor="middle"
-                            fill="#334155"
+                            fill={isNetworkActive ? '#0284c7' : '#334155'}
                             fontSize="10.5"
-                            fontWeight="500"
+                            fontWeight={isNetworkActive ? '600' : '500'}
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             {isFiber ? '10G Fiber' : is10GbE ? '10GbE LAN' : 'Dual 1GbE'}
@@ -657,7 +797,12 @@ export default function EnclosureVisualizer({ config }) {
                     </g>
 
                     {/* 3. Serial / CAN / I/O Gland Indicators (Center x = 382) */}
-                    <g opacity={hasAnyIo ? 1 : 0.3}>
+                    <g
+                        opacity={hasAnyIo ? 1 : 0.35}
+                        onClick={(e) => handleTabClick('network', e)}
+                        className="cursor-pointer"
+                    >
+                        <rect x="336" y="468" width="92" height="46" fill="transparent" />
                         <rect
                             x="366"
                             y="470"
@@ -678,9 +823,9 @@ export default function EnclosureVisualizer({ config }) {
                             x="382"
                             y="506"
                             textAnchor="middle"
-                            fill="#334155"
+                            fill={isNetworkActive ? '#0284c7' : '#334155'}
                             fontSize="10.5"
-                            fontWeight="500"
+                            fontWeight={isNetworkActive ? '600' : '500'}
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             Serial / CAN / I/O
@@ -688,7 +833,11 @@ export default function EnclosureVisualizer({ config }) {
                     </g>
 
                     {/* 4. Power Gland Indicators (Center x = 486) */}
-                    <g>
+                    <g
+                        onClick={(e) => handleTabClick('power', e)}
+                        className="cursor-pointer"
+                    >
+                        <rect x="446" y="468" width="80" height="46" fill="transparent" />
                         <rect x="470" y="470" width="14" height="16" rx="2.5" fill="#475569" />
                         {(config.solarMppt || config.alternatorDc || config.shoreAc) && (
                             <rect x="488" y="470" width="14" height="16" rx="2.5" fill="#475569" />
@@ -697,9 +846,9 @@ export default function EnclosureVisualizer({ config }) {
                             x="486"
                             y="506"
                             textAnchor="middle"
-                            fill="#334155"
+                            fill={isPowerActive ? '#0284c7' : '#334155'}
                             fontSize="10.5"
-                            fontWeight="500"
+                            fontWeight={isPowerActive ? '600' : '500'}
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             Power Inputs

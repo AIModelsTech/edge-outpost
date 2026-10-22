@@ -13,8 +13,7 @@ import {
 
 const TABS = [
     { id: 'compute', label: 'Compute' },
-    { id: 'cameras', label: 'Cameras' },
-    { id: 'network-io', label: 'Network & I/O' },
+    { id: 'network', label: 'Cameras, Network & I/O' },
     { id: 'connectivity', label: 'Connectivity' },
     { id: 'power', label: 'Power' },
     { id: 'storage', label: 'Storage' },
@@ -100,7 +99,11 @@ export default function EnclosureConfigurator({
         <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
             {/* Left: Clean Architectural Enclosure Diagram */}
             <div className="lg:col-span-7 xl:col-span-8">
-                <EnclosureVisualizer config={config} />
+                <EnclosureVisualizer
+                    config={config}
+                    activeTab={activeTab}
+                    onSelectTab={setActiveTab}
+                />
             </div>
 
             {/* Right: Tabbed Module Selector */}
@@ -148,29 +151,27 @@ export default function EnclosureConfigurator({
                         </div>
                     )}
 
-                    {activeTab === 'cameras' && (
-                        <div className="space-y-3">
-                            <div className="mb-3">
-                                <h3 className="text-base font-semibold text-aim-900">
-                                    Camera &amp; Vision Interfaces
-                                </h3>
-                                <p className="text-xs text-aim-500">
-                                    Select PoE+/PoE++ switches, low-latency GMSL2 coax, or hybrid vision ports.
-                                </p>
-                            </div>
-                            {CAMERA_PORT_OPTIONS.map((opt) =>
-                                renderSingleOptionCard(
-                                    opt,
-                                    config.cameras === opt.id,
-                                    () => handleSelectSingle('cameras', opt.id)
-                                )
-                            )}
-                        </div>
-                    )}
-
-                    {activeTab === 'network-io' && (
+                    {activeTab === 'network' && (
                         <div className="space-y-5">
                             <div className="space-y-2.5">
+                                <div>
+                                    <h3 className="text-sm font-semibold text-aim-900">
+                                        Camera &amp; Vision Interfaces
+                                    </h3>
+                                    <p className="text-xs text-aim-500">
+                                        PoE+/PoE++ switches, low-latency GMSL2 coax, or hybrid vision ports.
+                                    </p>
+                                </div>
+                                {CAMERA_PORT_OPTIONS.map((opt) =>
+                                    renderSingleOptionCard(
+                                        opt,
+                                        config.cameras === opt.id,
+                                        () => handleSelectSingle('cameras', opt.id)
+                                    )
+                                )}
+                            </div>
+
+                            <div className="space-y-2.5 border-t border-aim-100 pt-4">
                                 <div>
                                     <h3 className="text-sm font-semibold text-aim-900">
                                         Network Uplink
