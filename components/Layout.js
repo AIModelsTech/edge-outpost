@@ -3,13 +3,13 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 
 const defaultMeta = {
-    title: 'EdgeForge by AIM — Custom Weather-Resistant Edge AI Enclosures',
+    title: 'Edge Outpost by AIM — Custom Weather-Resistant Edge AI Enclosures',
     description:
         'Configure custom NEMA 4X weather-resistant Edge AI enclosures with scalable DIN-rail compute (up to 2,000+ TOPS), PoE++ & GMSL2 camera glands, 5G & NTN satellite backhaul, LiFePO4 UPS, and solar/alternator charging.',
 };
 
 export default function Layout({ children, title, description }) {
-    const pageTitle = title ? `${title} | EdgeForge by AIM` : defaultMeta.title;
+    const pageTitle = title ? `${title} | Edge Outpost by AIM` : defaultMeta.title;
     const pageDescription = description || defaultMeta.description;
 
     return (

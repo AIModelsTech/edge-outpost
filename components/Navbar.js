@@ -19,7 +19,7 @@ export default function Navbar() {
                     <Logo height={28} />
                     <span className="h-4 w-px bg-aim-200" />
                     <span className="text-base font-semibold tracking-tight text-aim-900">
-                        EdgeForge
+                        Edge Outpost
                     </span>
                 </Link>
 

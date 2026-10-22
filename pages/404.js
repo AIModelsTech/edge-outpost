@@ -13,11 +13,11 @@ export default function Custom404() {
                         Page not found
                     </h1>
                     <p className="mt-4 text-aim-600">
-                        Return to the EdgeForge enclosure configurator to customize your hardware specification.
+                        Return to the Edge Outpost enclosure configurator to customize your hardware specification.
                     </p>
                     <div className="mt-8">
                         <Link href="/" className="btn-primary">
-                            Back to EdgeForge Configurator
+                            Back to Edge Outpost Configurator
                         </Link>
                     </div>
                 </div>

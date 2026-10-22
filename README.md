@@ -1,6 +1,6 @@
-# EdgeForge by AIModels Tech
+# Edge Outpost by AIModels Tech
 
-Public product & interactive visual configurator website for **EdgeForge** — AIModels Tech's custom weather-resistant NEMA 4X Edge AI enclosures.
+Public product & interactive visual configurator website for **Edge Outpost** — AIModels Tech's custom weather-resistant NEMA 4X Edge AI enclosures.
 
 ## Features
 

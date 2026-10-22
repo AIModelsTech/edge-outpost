@@ -51,7 +51,7 @@ export default function HomePage() {
                             </h1>
 
                             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-aim-600">
-                                EdgeForge combines NEMA 4X weather-sealed housings, conduction-cooled AI compute,
+                                Edge Outpost combines NEMA 4X weather-sealed housings, conduction-cooled AI compute,
                                 PoE++ and GMSL2 vision ports, 5G and satellite connectivity, and hybrid LiFePO4/solar power
                                 in a single deployable system.
                             </p>
@@ -73,7 +73,7 @@ export default function HomePage() {
                                     viewBox="48 10 264 292"
                                     className="h-auto w-full select-none"
                                     role="img"
-                                    aria-label="EdgeForge NEMA 4X Enclosure Illustration"
+                                    aria-label="Edge Outpost NEMA 4X Enclosure Illustration"
                                 >
                                     {/* Top Antennas (5G MIMO, GNSS, Satellite) */}
                                     <rect x="96" y="14" width="10" height="34" rx="5" fill="#0f172a" />

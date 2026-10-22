@@ -47,10 +47,10 @@ export default function ConfigContactForm({ config, onSelectSector }) {
             email: formState.email,
             company: formState.company,
             industry: formState.sector,
-            subject: `EdgeForge Inquiry — ${formState.sector}`,
+            subject: `Edge Outpost Inquiry — ${formState.sector}`,
             text: formState.text,
-            edgeforgeConfigSummary: details.summaryText,
-            edgeforgeSelectedOptions: details.selectedPills.join(', '),
+            edgeOutpostConfigSummary: details.summaryText,
+            edgeOutpostSelectedOptions: details.selectedPills.join(', '),
         };
 
         try {

@@ -10,7 +10,7 @@ export default function Footer() {
                             <Logo height={26} />
                             <span className="h-4 w-px bg-aim-200" />
                             <span className="text-base font-semibold tracking-tight text-aim-900">
-                                EdgeForge
+                                Edge Outpost
                             </span>
                         </div>
                         <p className="mt-2.5 max-w-md text-sm text-aim-500">

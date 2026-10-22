@@ -64,7 +64,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                     viewBox="44 10 692 505"
                     className="h-auto w-full select-none"
                     role="img"
-                    aria-label="EdgeForge Enclosure Diagram"
+                    aria-label="Edge Outpost Enclosure Diagram"
                 >
                     {/* ================= TOP ANTENNAS (5G, WI-FI/BLE, GNSS RTK, NTN SATELLITE) ================= */}
                     <g

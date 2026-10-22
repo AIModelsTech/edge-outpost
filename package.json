@@ -1,7 +1,7 @@
 {
-    "name": "edgeforge",
+    "name": "edge-outpost",
     "version": "1.0.0",
-    "description": "EdgeForge by AIM Tech — Custom weather-resistant NEMA 4X Edge AI enclosures and interactive configurator",
+    "description": "Edge Outpost by AIM Tech — Custom weather-resistant NEMA 4X Edge AI enclosures and interactive configurator",
     "private": false,
     "scripts": {
         "dev": "next dev",
