@@ -76,9 +76,8 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
 
                         {/* 1. 5G Cellular MIMO (Center x = 128) */}
                         <g opacity={config.cellular5g ? 1 : 0.25} className="transition-opacity duration-200">
-                            <rect x="108" y="38" width="14" height="50" rx="7" fill="#0f172a" />
-                            <rect x="134" y="44" width="14" height="44" rx="7" fill="#0f172a" />
-                            <rect x="104" y="84" width="48" height="8" rx="3" fill="#475569" />
+                            <rect x="108" y="38" width="14" height="52" rx="7" fill="#0f172a" />
+                            <rect x="134" y="44" width="14" height="46" rx="7" fill="#0f172a" />
                             <text
                                 x="128"
                                 y="26"
@@ -94,8 +93,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
 
                         {/* 2. Wi-Fi 6E & Bluetooth (Center x = 236) */}
                         <g opacity={config.wifiBle ? 1 : 0.25} className="transition-opacity duration-200">
-                            <rect x="229" y="42" width="14" height="46" rx="7" fill="#0f172a" />
-                            <rect x="220" y="84" width="32" height="8" rx="3" fill="#475569" />
+                            <rect x="229" y="42" width="14" height="48" rx="7" fill="#0f172a" />
                             <text
                                 x="236"
                                 y="26"
@@ -111,8 +109,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
 
                         {/* 3. GNSS / RTK Multi-Band Puck (Center x = 344) */}
                         <g opacity={config.gnssRtk ? 1 : 0.25} className="transition-opacity duration-200">
-                            <path d="M 320 84 C 320 62, 368 62, 368 84 Z" fill="#0f172a" />
-                            <rect x="330" y="84" width="28" height="8" rx="3" fill="#475569" />
+                            <path d="M 320 90 C 320 66, 368 66, 368 90 Z" fill="#0f172a" />
                             <text
                                 x="344"
                                 y="26"
@@ -128,8 +125,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
 
                         {/* 4. NTN Satellite Phased Dome (Center x = 468) */}
                         <g opacity={config.satelliteNtn ? 1 : 0.25} className="transition-opacity duration-200">
-                            <path d="M 422 84 L 434 56 L 502 56 L 514 84 Z" fill="#0f172a" />
-                            <rect x="448" y="84" width="40" height="8" rx="3" fill="#475569" />
+                            <path d="M 422 90 L 434 60 L 502 60 L 514 90 Z" fill="#0f172a" />
                             <text
                                 x="468"
                                 y="26"
@@ -211,29 +207,29 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                     <rect x="560" y="330" width="6" height="28" rx="3" fill="#475569" />
 
                     {/* ================= RAIL 1 (UPPER HORIZONTAL RAIL) ================= */}
-                    <line x1="88" y1="190" x2="532" y2="190" stroke="#cbd5e1" strokeWidth="6" strokeLinecap="round" />
+                    <line x1="86" y1="190" x2="534" y2="190" stroke="#cbd5e1" strokeWidth="6" strokeLinecap="round" />
 
-                    {/* 1. Compute Module (x=92, width=148) */}
+                    {/* 1. Compute Module (x=90, width=164) */}
                     <g
-                        transform="translate(92, 132)"
+                        transform="translate(90, 132)"
                         onClick={(e) => handleTabClick('compute', e)}
                         className="cursor-pointer"
                     >
                         <rect
                             x="0"
                             y="0"
-                            width="148"
+                            width="164"
                             height="116"
                             rx="10"
                             fill="#0f172a"
                             stroke={isComputeActive ? '#0284c7' : '#0f172a'}
-                            strokeWidth={isComputeActive ? '2.25' : '1.75'}
+                            strokeWidth={isComputeActive ? '2.5' : '1.75'}
                         />
                         <text
                             x="14"
                             y="26"
                             fill="#94a3b8"
-                            fontSize="9.5"
+                            fontSize="9"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -243,7 +239,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             x="14"
                             y="48"
                             fill="#ffffff"
-                            fontSize="11"
+                            fontSize="10"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -253,14 +249,14 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             x="14"
                             y="65"
                             fill="#94a3b8"
-                            fontSize="10"
+                            fontSize="9.5"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             {storageObj.isOnboard ? 'Onboard ≤1TB NVMe' : 'Conduction Cooled'}
                         </text>
-                        <rect x="14" y="78" width="72" height="24" rx="5" fill="#1e293b" />
+                        <rect x="14" y="78" width="78" height="24" rx="5" fill="#1e293b" />
                         <text
-                            x="50"
+                            x="53"
                             y="94"
                             textAnchor="middle"
                             fill="#f8fafc"
@@ -272,14 +268,14 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         </text>
                         {storageObj.isOnboard && (
                             <g
-                                transform="translate(92, 78)"
+                                transform="translate(100, 78)"
                                 onClick={(e) => handleTabClick('storage', e)}
                                 className="cursor-pointer"
                             >
                                 <rect
                                     x="0"
                                     y="0"
-                                    width="42"
+                                    width="48"
                                     height="24"
                                     rx="5"
                                     fill="#334155"
@@ -287,7 +283,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                     strokeWidth="1.5"
                                 />
                                 <text
-                                    x="21"
+                                    x="24"
                                     y="16"
                                     textAnchor="middle"
                                     fill="#e2e8f0"
@@ -301,16 +297,16 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         )}
                     </g>
 
-                    {/* 2. Vision (PoE / GMSL2) & Network Switch Module (x=250, width=146) */}
+                    {/* 2. Vision (PoE / GMSL2) & Network Switch Module (x=262, width=138) */}
                     <g
-                        transform="translate(250, 132)"
+                        transform="translate(262, 132)"
                         onClick={(e) => handleTabClick('network', e)}
                         className="cursor-pointer"
                     >
                         <rect
                             x="0"
                             y="0"
-                            width="146"
+                            width="138"
                             height="116"
                             rx="10"
                             fill="#f8fafc"
@@ -321,7 +317,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             x="14"
                             y="26"
                             fill="#64748b"
-                            fontSize="9.5"
+                            fontSize="9"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -331,7 +327,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             x="14"
                             y="48"
                             fill="#0f172a"
-                            fontSize="11.5"
+                            fontSize="10"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -339,9 +335,9 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         </text>
                         <text
                             x="14"
-                            y="66"
+                            y="65"
                             fill="#475569"
-                            fontSize="10.5"
+                            fontSize="9.5"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             {networkObj.shortLabel}
@@ -351,12 +347,12 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         <g transform="translate(14, 84)">
                             {Array.from({ length: totalCameras }).map((_, idx) => {
                                 const isGmslPort = idx < gmslCount;
-                                const xPos = idx * 14;
+                                const xPos = idx * 13.5;
                                 if (isGmslPort) {
                                     return (
-                                        <g key={idx} transform={`translate(${xPos + 5}, 6)`}>
-                                            <circle cx="0" cy="0" r="5" fill="#ffffff" stroke="#0f172a" strokeWidth="1.75" />
-                                            <circle cx="0" cy="0" r="1.75" fill="#0f172a" />
+                                        <g key={idx} transform={`translate(${xPos + 4.5}, 6)`}>
+                                            <circle cx="0" cy="0" r="4.5" fill="#ffffff" stroke="#0f172a" strokeWidth="1.75" />
+                                            <circle cx="0" cy="0" r="1.5" fill="#0f172a" />
                                         </g>
                                     );
                                 }
@@ -365,7 +361,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                         key={idx}
                                         x={xPos}
                                         y="0"
-                                        width="9"
+                                        width="8.5"
                                         height="12"
                                         rx="2"
                                         fill="#0f172a"
@@ -375,9 +371,9 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         </g>
                     </g>
 
-                    {/* 3. RF & Positioning Hub (x=406, width=122) */}
+                    {/* 3. RF & Positioning Hub (x=408, width=122) */}
                     <g
-                        transform="translate(406, 132)"
+                        transform="translate(408, 132)"
                         onClick={(e) => handleTabClick('connectivity', e)}
                         className="cursor-pointer"
                     >
@@ -395,7 +391,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             x="12"
                             y="26"
                             fill="#64748b"
-                            fontSize="9.5"
+                            fontSize="9"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -424,7 +420,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                             y="18"
                                             textAnchor="middle"
                                             fill={mod.active ? '#ffffff' : '#94a3b8'}
-                                            fontSize="9"
+                                            fontSize="8.5"
                                             fontWeight="600"
                                             fontFamily="Inter, system-ui, sans-serif"
                                         >
@@ -437,18 +433,18 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                     </g>
 
                     {/* ================= RAIL 2 (LOWER HORIZONTAL RAIL) ================= */}
-                    <line x1="88" y1="342" x2="532" y2="342" stroke="#cbd5e1" strokeWidth="6" strokeLinecap="round" />
+                    <line x1="86" y1="342" x2="534" y2="342" stroke="#cbd5e1" strokeWidth="6" strokeLinecap="round" />
 
-                    {/* 1. Storage Bay (x=92, width=104) */}
+                    {/* 1. Storage Bay (x=90, width=106) */}
                     <g
-                        transform="translate(92, 284)"
+                        transform="translate(90, 284)"
                         onClick={(e) => handleTabClick('storage', e)}
                         className="cursor-pointer"
                     >
                         <rect
                             x="0"
                             y="0"
-                            width="104"
+                            width="106"
                             height="116"
                             rx="10"
                             fill={storageObj.isOnboard ? '#ffffff' : '#f8fafc'}
@@ -460,7 +456,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             x="12"
                             y="26"
                             fill="#64748b"
-                            fontSize="9.5"
+                            fontSize="9"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -472,7 +468,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                     x="12"
                                     y="50"
                                     fill="#0f172a"
-                                    fontSize="11"
+                                    fontSize="10"
                                     fontWeight="600"
                                     fontFamily="Inter, system-ui, sans-serif"
                                 >
@@ -482,7 +478,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                     x="12"
                                     y="68"
                                     fill="#64748b"
-                                    fontSize="10"
+                                    fontSize="9.5"
                                     fontFamily="Inter, system-ui, sans-serif"
                                 >
                                     Up to 1 TB
@@ -491,7 +487,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                     x="12"
                                     y="86"
                                     fill="#94a3b8"
-                                    fontSize="9.5"
+                                    fontSize="9"
                                     fontFamily="Inter, system-ui, sans-serif"
                                 >
                                     In Compute
@@ -503,7 +499,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                     x="12"
                                     y="50"
                                     fill="#0f172a"
-                                    fontSize="11.5"
+                                    fontSize="10.5"
                                     fontWeight="600"
                                     fontFamily="Inter, system-ui, sans-serif"
                                 >
@@ -513,7 +509,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                     x="12"
                                     y="68"
                                     fill="#475569"
-                                    fontSize="10"
+                                    fontSize="9.5"
                                     fontFamily="Inter, system-ui, sans-serif"
                                 >
                                     {storageObj.bays}x NVMe Bays
@@ -535,16 +531,16 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         )}
                     </g>
 
-                    {/* 2. Industrial I/O Module: Serial/CAN + DIO/Analog (x=206, width=104) */}
+                    {/* 2. Industrial I/O Module: Serial/CAN + DIO/Analog (x=204, width=106) */}
                     <g
-                        transform="translate(206, 284)"
+                        transform="translate(204, 284)"
                         onClick={(e) => handleTabClick('io', e)}
                         className="cursor-pointer"
                     >
                         <rect
                             x="0"
                             y="0"
-                            width="104"
+                            width="106"
                             height="116"
                             rx="10"
                             fill="#f8fafc"
@@ -555,7 +551,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             x="12"
                             y="26"
                             fill="#64748b"
-                            fontSize="9.5"
+                            fontSize="9"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -567,7 +563,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             <rect
                                 x="0"
                                 y="0"
-                                width="84"
+                                width="86"
                                 height="28"
                                 rx="5"
                                 fill={config.serialCan ? '#0f172a' : '#ffffff'}
@@ -575,11 +571,11 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                 strokeWidth="1.25"
                             />
                             <text
-                                x="42"
+                                x="43"
                                 y="18"
                                 textAnchor="middle"
                                 fill={config.serialCan ? '#ffffff' : '#94a3b8'}
-                                fontSize="9.5"
+                                fontSize="9"
                                 fontWeight="600"
                                 fontFamily="Inter, system-ui, sans-serif"
                             >
@@ -592,7 +588,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             <rect
                                 x="0"
                                 y="0"
-                                width="84"
+                                width="86"
                                 height="28"
                                 rx="5"
                                 fill={config.digitalAnalogIo ? '#0f172a' : '#ffffff'}
@@ -600,11 +596,11 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                 strokeWidth="1.25"
                             />
                             <text
-                                x="42"
+                                x="43"
                                 y="18"
                                 textAnchor="middle"
                                 fill={config.digitalAnalogIo ? '#ffffff' : '#94a3b8'}
-                                fontSize="9.5"
+                                fontSize="9"
                                 fontWeight="600"
                                 fontFamily="Inter, system-ui, sans-serif"
                             >
@@ -613,16 +609,16 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         </g>
                     </g>
 
-                    {/* 3. Power & Reserve Bay — Non-overlapping 2x2 Grid (x=320, width=208) */}
+                    {/* 3. Power & Reserve Bay — Non-overlapping 2x2 Grid (x=318, width=212) */}
                     <g
-                        transform="translate(320, 284)"
+                        transform="translate(318, 284)"
                         onClick={(e) => handleTabClick('power', e)}
                         className="cursor-pointer"
                     >
                         <rect
                             x="0"
                             y="0"
-                            width="208"
+                            width="212"
                             height="116"
                             rx="10"
                             fill="#f8fafc"
@@ -633,7 +629,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             x="12"
                             y="26"
                             fill="#64748b"
-                            fontSize="9.5"
+                            fontSize="9"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -645,11 +641,11 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                 const col = idx % 2;
                                 const row = Math.floor(idx / 2);
                                 return (
-                                    <g key={mod.id} transform={`translate(${col * 95}, ${row * 34})`}>
+                                    <g key={mod.id} transform={`translate(${col * 98}, ${row * 34})`}>
                                         <rect
                                             x="0"
                                             y="0"
-                                            width="89"
+                                            width="90"
                                             height="28"
                                             rx="5"
                                             fill={mod.active ? '#0f172a' : '#ffffff'}
@@ -657,11 +653,11 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                                             strokeWidth="1.25"
                                         />
                                         <text
-                                            x="44.5"
+                                            x="45"
                                             y="18"
                                             textAnchor="middle"
                                             fill={mod.active ? '#ffffff' : '#94a3b8'}
-                                            fontSize="9.5"
+                                            fontSize="9"
                                             fontWeight="600"
                                             fontFamily="Inter, system-ui, sans-serif"
                                         >

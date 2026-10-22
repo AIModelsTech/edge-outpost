@@ -68,23 +68,18 @@ export default function HomePage() {
 
                         {/* Right: Minimal Architectural Hardware Illustration */}
                         <div className="lg:col-span-5">
-                            <div className="mx-auto max-w-sm rounded-2xl border border-aim-200 bg-aim-50/60 p-6">
+                            <div className="mx-auto max-w-xs sm:max-w-sm">
                                 <svg
-                                    viewBox="0 0 360 320"
+                                    viewBox="48 10 264 292"
                                     className="h-auto w-full select-none"
                                     role="img"
                                     aria-label="EdgeForge NEMA 4X Enclosure Illustration"
                                 >
-                                    {/* Top Mounting Flange */}
-                                    <rect x="88" y="42" width="184" height="10" rx="3" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="1.25" />
-                                    <circle cx="104" cy="47" r="2" fill="#64748b" />
-                                    <circle cx="256" cy="47" r="2" fill="#64748b" />
-
                                     {/* Top Antennas (5G MIMO, GNSS, Satellite) */}
-                                    <rect x="96" y="14" width="10" height="32" rx="5" fill="#0f172a" />
-                                    <rect x="114" y="20" width="10" height="26" rx="5" fill="#0f172a" />
-                                    <path d="M 164 46 C 164 32, 196 32, 196 46 Z" fill="#0f172a" />
-                                    <path d="M 218 46 L 226 26 L 266 26 L 274 46 Z" fill="#0f172a" />
+                                    <rect x="96" y="14" width="10" height="34" rx="5" fill="#0f172a" />
+                                    <rect x="114" y="20" width="10" height="28" rx="5" fill="#0f172a" />
+                                    <path d="M 164 48 C 164 32, 196 32, 196 48 Z" fill="#0f172a" />
+                                    <path d="M 218 48 L 226 28 L 266 28 L 274 48 Z" fill="#0f172a" />
 
                                     {/* Main NEMA 4X Sealed Chassis */}
                                     <rect
@@ -154,9 +149,8 @@ export default function HomePage() {
                                     <rect x="168" y="202" width="42" height="20" rx="4" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="1" />
                                     <rect x="216" y="202" width="42" height="20" rx="4" fill="#0f172a" />
 
-                                    {/* Bottom Mounting Flange & Sealed Gland Ports */}
-                                    <rect x="88" y="272" width="184" height="8" rx="3" fill="#0f172a" />
-                                    <g transform="translate(102, 280)">
+                                    {/* Bottom Sealed Gland Ports */}
+                                    <g transform="translate(102, 272)">
                                         <rect x="0" y="0" width="8" height="14" rx="2" fill="#0f172a" />
                                         <rect x="14" y="0" width="8" height="14" rx="2" fill="#0f172a" />
                                         <rect x="28" y="0" width="8" height="14" rx="2" fill="#0f172a" />
