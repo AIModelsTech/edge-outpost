@@ -8,7 +8,7 @@ Public product & interactive visual configurator website for **Edge Outpost** â€
   - Real-time schematic visualization of internal DIN rails, bottom waterproof gland plate ports, top 5G MIMO, Wi-Fi/BLE, GNSS RTK & NTN satellite antennas, and external solar panel array.
   - **Configurable Modules**:
     - **Edge AI Compute Capacity**: Compact AI Module (40 TOPS), Multi-Stream AI Module (150 TOPS), High-Density AI Module (275â€“550 TOPS), or Ultra-Compute AI Module (2,000+ TOPS).
-    - **Rugged Camera Ports**: 2x PoE+ (60W), 4x PoE+ Managed (120W), 4x GMSL2 Coax, 4x GMSL2 + 4x PoE+ Hybrid, or 8x PoE++ (240W) with sealed M12 / FAKRA / RJ45 glands.
+    - **Rugged Camera Ports**: 2x PoE+ (60W), 4x PoE+ Managed (120W), 4x GMSL2 Coax, 4x GMSL2 + 4x PoE+ Hybrid, or 8x PoE+ (240W) with sealed M12 / FAKRA / RJ45 glands.
     - **Network Uplink**: Dual 1GbE RJ45, 10GbE + 1GbE Copper, or Dual 10G Rugged Fiber SFP+.
     - **Wireless & Satellite Connectivity**: Industrial 5G Dual-SIM Cellular Modem (4x4 MIMO) and NTN Satellite Transceiver Uplink.
     - **Power & Charging Architecture**: Internal 24V Heated LiFePO4 UPS Battery Bank, Solar Array + MPPT Controller, 12V/24V/48V Alternator DC-DC Charger, and 120/240V Shore/Grid AC-DC Supply.

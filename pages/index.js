@@ -8,7 +8,7 @@ const CAPABILITIES = [
     {
         title: 'Custom Hardware SKUs',
         description:
-            'Need specialized connectors, 316L stainless marine housings, hazardous-location certification, or custom sensor boards? We engineer bespoke enclosure builds to your exact mechanical and electrical specification.',
+            'Need specialized connectors, 316L stainless marine housings, custom thermal envelopes, or proprietary sensor boards? We engineer bespoke enclosure builds to your exact mechanical and electrical specification.',
     },
     {
         title: 'Custom AI Models & Software',
@@ -52,7 +52,7 @@ export default function HomePage() {
 
                             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-aim-600">
                                 Edge Outpost combines NEMA 4X weather-sealed housings, scalable edge AI compute,
-                                PoE++ and GMSL2 vision ports, 5G and satellite connectivity, and hybrid LiFePO4/solar power
+                                PoE+ and GMSL2 vision ports, 5G and satellite connectivity, and hybrid LiFePO4/solar power
                                 in a single deployable system.
                             </p>
 

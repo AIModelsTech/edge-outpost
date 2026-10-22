@@ -160,7 +160,7 @@ export default function EnclosureConfigurator({
                                         Camera &amp; Vision Interfaces
                                     </h3>
                                     <p className="text-xs text-aim-500">
-                                        PoE+/PoE++ switches, low-latency GMSL2 coax, or hybrid vision ports.
+                                        Managed PoE+ switches, low-latency GMSL2 coax, or hybrid vision ports.
                                     </p>
                                 </div>
                                 {CAMERA_PORT_OPTIONS.map((opt) =>

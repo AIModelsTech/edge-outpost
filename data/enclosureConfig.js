@@ -76,13 +76,13 @@ export const CAMERA_PORT_OPTIONS = [
     },
     {
         id: 'cam-8x',
-        name: '8x PoE++ Sensor Array',
+        name: '8x PoE+ Sensor Array',
         subtitle: '240W budget • High-power PTZ & 3D sensors',
-        shortLabel: '8x PoE++ Cameras',
+        shortLabel: '8x PoE+ Cameras',
         poeCount: 8,
         gmslCount: 0,
-        moduleLabel: '8x PoE++ Switch',
-        glandLabel: '8x Camera PoE++',
+        moduleLabel: '8x PoE+ Switch',
+        glandLabel: '8x Camera PoE+',
     },
 ];
 
