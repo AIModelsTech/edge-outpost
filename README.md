@@ -1,10 +1,10 @@
 # EdgeForge by AIModels Tech
 
-Public product & interactive visual configurator website for **EdgeForge** — AIModels Tech's custom weather-resistant NEMA 4X / IP67 Edge AI enclosures.
+Public product & interactive visual configurator website for **EdgeForge** — AIModels Tech's custom weather-resistant NEMA 4X / IP66 Edge AI enclosures.
 
 ## Features
 
-- **Interactive NEMA 4X / IP67 Visual Enclosure Configurator**:
+- **Interactive NEMA 4X / IP66 Visual Enclosure Configurator**:
   - Real-time schematic visualization of internal DIN rails, conduction heatsink fins, status telemetry, bottom waterproof gland plate ports, top N-type 5G MIMO & NTN satellite antennas, pole/wall mounting brackets, and external solar panel array.
   - **Configurable Modules**:
     - **Edge AI Compute Capacity**: Compact Node (40 TOPS), Mid-Range Multi-Stream AI Module (150 TOPS), or High-Density Industrial GPU Cluster (275–550 TOPS).

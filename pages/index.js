@@ -50,7 +50,7 @@ export default function HomePage() {
                         </h1>
 
                         <p className="mt-6 text-lg leading-relaxed text-aim-600">
-                            EdgeForge combines NEMA 4X / IP67 weather-sealed housings, conduction-cooled AI compute,
+                            EdgeForge combines NEMA 4X / IP66 weather-sealed housings, conduction-cooled AI compute,
                             PoE++ and GMSL2 vision ports, 5G and satellite connectivity, and hybrid LiFePO4/solar power
                             in a single deployable system.
                         </p>
@@ -68,7 +68,7 @@ export default function HomePage() {
                     {/* Clean 4-Stat Strip */}
                     <div className="mt-16 grid grid-cols-2 gap-8 border-t border-aim-200 pt-10 sm:grid-cols-4">
                         <div>
-                            <p className="text-2xl font-semibold tracking-tight text-aim-900">NEMA 4X / IP67</p>
+                            <p className="text-2xl font-semibold tracking-tight text-aim-900">NEMA 4X / IP66</p>
                             <p className="mt-1 text-sm text-aim-500">Weather &amp; washdown sealed</p>
                         </div>
                         <div>
@@ -89,7 +89,7 @@ export default function HomePage() {
 
             {/* ================= INTERACTIVE CONFIGURATOR SECTION ================= */}
             <section id="configurator" className="scroll-mt-20 py-20 sm:py-24">
-                <div className="mx-auto max-w-6xl px-6">
+                <div className="mx-auto max-w-7xl px-6">
                     <div className="max-w-2xl">
                         <h2 className="text-3xl font-semibold tracking-tight text-aim-900">
                             Configure your enclosure

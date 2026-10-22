@@ -30,15 +30,15 @@ export default function EnclosureVisualizer({ config }) {
     ];
 
     return (
-        <div className="rounded-2xl border border-aim-200 bg-white p-6 shadow-sm">
+        <div className="rounded-2xl border border-aim-200 bg-white p-5 shadow-sm sm:p-7">
             {/* Minimal Header */}
-            <div className="mb-4 flex items-center justify-between border-b border-aim-100 pb-4">
+            <div className="mb-3 flex items-center justify-between border-b border-aim-100 pb-3">
                 <div>
-                    <h3 className="text-sm font-semibold text-aim-900">
+                    <h3 className="text-base font-semibold text-aim-900">
                         Enclosure Architecture
                     </h3>
                     <p className="text-xs text-aim-500">
-                        NEMA 4X / IP67 Sealed Chassis
+                        NEMA 4X / IP66 Sealed Chassis
                     </p>
                 </div>
                 <span className="rounded-full border border-aim-200 bg-aim-50 px-3 py-1 text-xs font-medium text-aim-700">
@@ -49,7 +49,7 @@ export default function EnclosureVisualizer({ config }) {
             {/* Clean Architectural Diagram */}
             <div className="mx-auto w-full">
                 <svg
-                    viewBox="0 0 760 540"
+                    viewBox="44 10 692 505"
                     className="h-auto w-full select-none"
                     role="img"
                     aria-label="EdgeForge Enclosure Diagram"
@@ -707,6 +707,10 @@ export default function EnclosureVisualizer({ config }) {
                     </g>
                 </svg>
             </div>
+
+            <p className="mt-3 border-t border-aim-100 pt-3 text-[11px] leading-relaxed text-aim-400">
+                * Visual representation only. Not all module combinations fit within a single standard enclosure footprint—our engineering team reviews every configuration for thermal, power, and physical compatibility.
+            </p>
         </div>
     );
 }

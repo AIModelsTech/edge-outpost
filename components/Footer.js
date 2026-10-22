@@ -14,7 +14,7 @@ export default function Footer() {
                             </span>
                         </div>
                         <p className="mt-2.5 max-w-md text-sm text-aim-500">
-                            Weather-resistant NEMA 4X / IP67 Edge AI systems by AIModels Tech Inc.
+                            Weather-resistant NEMA 4X / IP66 Edge AI systems by AIModels Tech Inc.
                             Engineered in Greater Vancouver, BC, Canada.
                         </p>
                     </div>

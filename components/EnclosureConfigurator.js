@@ -99,12 +99,12 @@ export default function EnclosureConfigurator({
     return (
         <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
             {/* Left: Clean Architectural Enclosure Diagram */}
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-7 xl:col-span-8">
                 <EnclosureVisualizer config={config} />
             </div>
 
             {/* Right: Tabbed Module Selector */}
-            <div className="rounded-2xl border border-aim-200 bg-white p-6 shadow-sm lg:col-span-5">
+            <div className="rounded-2xl border border-aim-200 bg-white p-6 shadow-sm lg:col-span-5 xl:col-span-4">
                 {/* Compact Category Tabs */}
                 <div className="flex flex-wrap gap-1.5 border-b border-aim-100 pb-4">
                     {TABS.map((tab) => {

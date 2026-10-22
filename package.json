@@ -1,7 +1,7 @@
 {
     "name": "edgeforge",
     "version": "1.0.0",
-    "description": "EdgeForge by AIM Tech — Custom weather-resistant NEMA 4X / IP67 Edge AI enclosures and interactive configurator",
+    "description": "EdgeForge by AIM Tech — Custom weather-resistant NEMA 4X / IP66 Edge AI enclosures and interactive configurator",
     "private": false,
     "scripts": {
         "dev": "next dev",
