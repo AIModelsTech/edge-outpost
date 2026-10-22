@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import EnclosureVisualizer from './EnclosureVisualizer';
 import {
     SECTORS,
@@ -11,12 +11,21 @@ import {
     resolveConfigDetails,
 } from '../data/enclosureConfig';
 
+const TABS = [
+    { id: 'compute', label: 'Compute' },
+    { id: 'io', label: 'Cameras & Network' },
+    { id: 'connectivity', label: 'Connectivity' },
+    { id: 'power', label: 'Power' },
+    { id: 'storage', label: 'Storage' },
+];
+
 export default function EnclosureConfigurator({
     config,
     onChangeConfig,
     onApplySectorPreset,
     onProceedToContact,
 }) {
+    const [activeTab, setActiveTab] = useState('compute');
     const details = resolveConfigDetails(config);
 
     const handleSelectSingle = (field, value) => {
@@ -33,25 +42,68 @@ export default function EnclosureConfigurator({
         }));
     };
 
-    return (
-        <div className="space-y-8">
-            {/* Sector Quick-Preset Selector Strip */}
-            <div className="rounded-2xl border border-aim-200 bg-white p-5 shadow-sm">
-                <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-                    <div>
-                        <span className="text-xs font-semibold uppercase tracking-wider text-aim-500">
-                            Sector Baseline Templates
-                        </span>
-                        <h3 className="mt-0.5 text-base font-semibold text-aim-900">
-                            Load a recommended architecture by deployment sector — then customize any module
-                        </h3>
-                    </div>
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-aim-100 px-3 py-1 font-mono text-xs font-medium text-aim-700">
-                        Active Sector: {details.sectorObj.name}
-                    </span>
-                </div>
+    const renderSingleOptionCard = (opt, isSelected, onSelect) => (
+        <button
+            key={opt.id}
+            type="button"
+            onClick={onSelect}
+            className={`flex w-full items-center justify-between rounded-xl border p-4 text-left transition ${
+                isSelected
+                    ? 'border-aim-900 bg-aim-50/80 ring-1 ring-aim-900'
+                    : 'border-aim-200 bg-white hover:border-aim-300'
+            }`}
+        >
+            <div>
+                <p className="text-sm font-semibold text-aim-900">{opt.name}</p>
+                <p className="mt-0.5 text-xs text-aim-500">{opt.subtitle}</p>
+            </div>
+            <span
+                className={`ml-4 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${
+                    isSelected
+                        ? 'border-aim-900 bg-aim-900 text-white'
+                        : 'border-aim-300 bg-white'
+                }`}
+            >
+                {isSelected && <span className="h-2 w-2 rounded-full bg-white" />}
+            </span>
+        </button>
+    );
 
-                <div className="mt-4 flex flex-wrap gap-2">
+    const renderToggleOptionCard = (opt, isSelected, onToggle) => (
+        <button
+            key={opt.id}
+            type="button"
+            onClick={onToggle}
+            className={`flex w-full items-center justify-between rounded-xl border p-4 text-left transition ${
+                isSelected
+                    ? 'border-aim-900 bg-aim-50/80 ring-1 ring-aim-900'
+                    : 'border-aim-200 bg-white hover:border-aim-300'
+            }`}
+        >
+            <div>
+                <p className="text-sm font-semibold text-aim-900">{opt.name}</p>
+                <p className="mt-0.5 text-xs text-aim-500">{opt.subtitle}</p>
+            </div>
+            <span
+                className={`ml-4 flex h-5 w-5 shrink-0 items-center justify-center rounded border text-xs ${
+                    isSelected
+                        ? 'border-aim-900 bg-aim-900 text-white'
+                        : 'border-aim-300 bg-white text-transparent'
+                }`}
+            >
+                ✓
+            </span>
+        </button>
+    );
+
+    return (
+        <div className="space-y-6">
+            {/* One-Click Sector Preset Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-aim-200 bg-white px-5 py-4">
+                <span className="text-xs font-medium text-aim-500">
+                    Sector Presets
+                </span>
+                <div className="flex flex-wrap gap-1.5">
                     {SECTORS.map((sec) => {
                         const isSelected = config.sector === sec.id;
                         return (
@@ -59,10 +111,10 @@ export default function EnclosureConfigurator({
                                 key={sec.id}
                                 type="button"
                                 onClick={() => onApplySectorPreset(sec.id)}
-                                className={`rounded-lg border px-3.5 py-2 text-xs font-medium transition ${
+                                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition ${
                                     isSelected
-                                        ? 'border-aim-900 bg-aim-900 text-white shadow-sm'
-                                        : 'border-aim-200 bg-aim-50 text-aim-700 hover:border-aim-400 hover:bg-white'
+                                        ? 'bg-aim-900 text-white'
+                                        : 'bg-aim-50 text-aim-600 hover:bg-aim-100 hover:text-aim-900'
                                 }`}
                             >
                                 {sec.name}
@@ -72,342 +124,180 @@ export default function EnclosureConfigurator({
                 </div>
             </div>
 
-            {/* Main 2-Column Interactive Builder */}
+            {/* 2-Column Builder */}
             <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
-                {/* Left / Sticky Visual Enclosure Schematic (7 columns on desktop) */}
-                <div className="lg:sticky lg:top-24 lg:col-span-7">
+                {/* Left: Clean Architectural Enclosure Diagram */}
+                <div className="lg:col-span-7">
                     <EnclosureVisualizer config={config} />
-
-                    {/* Live Spec Sheet Summary Bar underneath visual */}
-                    <div className="mt-4 rounded-2xl border border-aim-200 bg-white p-5 shadow-sm">
-                        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-                            <div>
-                                <p className="text-xs font-semibold uppercase tracking-wider text-aim-500">
-                                    Configured Architecture Reference
-                                </p>
-                                <p className="mt-1 font-mono text-sm font-semibold text-aim-900">
-                                    {details.buildCode}
-                                </p>
-                                <p className="mt-1 text-xs text-aim-600">
-                                    All enclosures are built-to-order in Canada with full environmental sealing &amp; burn-in validation.
-                                </p>
-                            </div>
-                            <button
-                                type="button"
-                                onClick={onProceedToContact}
-                                className="btn-primary shrink-0"
-                            >
-                                Attach Build to Engineering Inquiry &rarr;
-                            </button>
-                        </div>
-                    </div>
                 </div>
 
-                {/* Right / Modular Hardware Controls (5 columns on desktop) */}
-                <div className="space-y-6 lg:col-span-5">
-                    {/* 1. EDGE AI COMPUTE CAPACITY */}
-                    <div className="card !p-5">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-sky-700">
-                                01 • DIN Rail 01
-                            </span>
-                            <span className="font-mono text-xs text-aim-500">
-                                {details.computeObj.tops}
-                            </span>
-                        </div>
-                        <h3 className="mt-1 text-lg font-semibold text-aim-900">
-                            Edge AI Compute Capacity
-                        </h3>
-                        <p className="mt-1 text-xs text-aim-600">
-                            Select the onboard neural &amp; GPU compute blade. Updates heatsink fin profile and internal DIN footprint.
-                        </p>
+                {/* Right: Tabbed Module Selector */}
+                <div className="rounded-2xl border border-aim-200 bg-white p-6 shadow-sm lg:col-span-5">
+                    {/* Compact Category Tabs */}
+                    <div className="flex flex-wrap gap-1.5 border-b border-aim-100 pb-4">
+                        {TABS.map((tab) => {
+                            const active = activeTab === tab.id;
+                            return (
+                                <button
+                                    key={tab.id}
+                                    type="button"
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`rounded-lg px-3 py-1.5 text-xs font-medium transition ${
+                                        active
+                                            ? 'bg-aim-900 text-white'
+                                            : 'text-aim-600 hover:bg-aim-50 hover:text-aim-900'
+                                    }`}
+                                >
+                                    {tab.label}
+                                </button>
+                            );
+                        })}
+                    </div>
 
-                        <div className="mt-4 space-y-2.5">
-                            {COMPUTE_OPTIONS.map((opt) => {
-                                const active = config.compute === opt.id;
-                                return (
-                                    <button
-                                        key={opt.id}
-                                        type="button"
-                                        onClick={() => handleSelectSingle('compute', opt.id)}
-                                        className={`w-full rounded-xl border p-3.5 text-left transition ${
-                                            active
-                                                ? 'border-aim-900 bg-aim-900/5 ring-1 ring-aim-900'
-                                                : 'border-aim-200 bg-white hover:border-aim-400'
-                                        }`}
-                                    >
-                                        <div className="flex items-center justify-between gap-2">
-                                            <span className="text-sm font-semibold text-aim-900">
-                                                {opt.name}
-                                            </span>
-                                            <span className="shrink-0 rounded bg-sky-100 px-2 py-0.5 font-mono text-[11px] font-semibold text-sky-900">
-                                                {opt.tops}
-                                            </span>
-                                        </div>
-                                        <p className="mt-1 text-xs leading-relaxed text-aim-600">
-                                            {opt.description}
+                    {/* Active Category Options */}
+                    <div className="mt-5 min-h-[260px]">
+                        {activeTab === 'compute' && (
+                            <div className="space-y-3">
+                                <div className="mb-3">
+                                    <h3 className="text-base font-semibold text-aim-900">
+                                        Edge AI Compute
+                                    </h3>
+                                    <p className="text-xs text-aim-500">
+                                        Conduction-cooled neural compute module on the upper rail.
+                                    </p>
+                                </div>
+                                {COMPUTE_OPTIONS.map((opt) =>
+                                    renderSingleOptionCard(
+                                        opt,
+                                        config.compute === opt.id,
+                                        () => handleSelectSingle('compute', opt.id)
+                                    )
+                                )}
+                            </div>
+                        )}
+
+                        {activeTab === 'io' && (
+                            <div className="space-y-5">
+                                <div className="space-y-2.5">
+                                    <div>
+                                        <h3 className="text-sm font-semibold text-aim-900">
+                                            PoE Camera Ports
+                                        </h3>
+                                        <p className="text-xs text-aim-500">
+                                            Managed PoE+/PoE++ switch and IP68 bottom glands.
                                         </p>
-                                        <div className="mt-2 flex flex-wrap gap-2 text-[11px] font-medium text-aim-500">
-                                            <span>Draw: {opt.powerDraw}</span>
-                                            <span>•</span>
-                                            <span>{opt.thermalType}</span>
-                                        </div>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
+                                    </div>
+                                    {CAMERA_PORT_OPTIONS.map((opt) =>
+                                        renderSingleOptionCard(
+                                            opt,
+                                            config.cameras === opt.id,
+                                            () => handleSelectSingle('cameras', opt.id)
+                                        )
+                                    )}
+                                </div>
 
-                    {/* 2. CAMERA PORTS (POE+ / POE++) */}
-                    <div className="card !p-5">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700">
-                                02 • DIN Rail 02 + Gland Plate
-                            </span>
-                            <span className="font-mono text-xs text-aim-500">
-                                {details.camerasObj.poeBudget}
-                            </span>
-                        </div>
-                        <h3 className="mt-1 text-lg font-semibold text-aim-900">
-                            Rugged Camera &amp; Sensor PoE Ports
-                        </h3>
-                        <p className="mt-1 text-xs text-aim-600">
-                            Configures the internal managed PoE+/PoE++ switch and bottom IP68 M12 / shielded RJ45 camera glands.
-                        </p>
-
-                        <div className="mt-4 grid grid-cols-1 gap-2.5">
-                            {CAMERA_PORT_OPTIONS.map((opt) => {
-                                const active = config.cameras === opt.id;
-                                return (
-                                    <button
-                                        key={opt.id}
-                                        type="button"
-                                        onClick={() => handleSelectSingle('cameras', opt.id)}
-                                        className={`w-full rounded-xl border p-3.5 text-left transition ${
-                                            active
-                                                ? 'border-aim-900 bg-aim-900/5 ring-1 ring-aim-900'
-                                                : 'border-aim-200 bg-white hover:border-aim-400'
-                                        }`}
-                                    >
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-sm font-semibold text-aim-900">
-                                                {opt.name}
-                                            </span>
-                                            <span className="rounded bg-emerald-100 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-900">
-                                                {opt.poeBudget}
-                                            </span>
-                                        </div>
-                                        <p className="mt-1 text-xs text-aim-600">{opt.description}</p>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    {/* 3. NETWORK UPLINK PORTS */}
-                    <div className="card !p-5">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-700">
-                                03 • Plant / Local Uplink
-                            </span>
-                            <span className="font-mono text-xs text-aim-500">
-                                {details.networkObj.speed}
-                            </span>
-                        </div>
-                        <h3 className="mt-1 text-lg font-semibold text-aim-900">
-                            Network &amp; Fiber Uplink Ports
-                        </h3>
-                        <p className="mt-1 text-xs text-aim-600">
-                            Select copper Ethernet or EMI-immune optical SFP+ transceivers for local network integration.
-                        </p>
-
-                        <div className="mt-4 space-y-2.5">
-                            {NETWORK_OPTIONS.map((opt) => {
-                                const active = config.network === opt.id;
-                                return (
-                                    <button
-                                        key={opt.id}
-                                        type="button"
-                                        onClick={() => handleSelectSingle('network', opt.id)}
-                                        className={`w-full rounded-xl border p-3.5 text-left transition ${
-                                            active
-                                                ? 'border-aim-900 bg-aim-900/5 ring-1 ring-aim-900'
-                                                : 'border-aim-200 bg-white hover:border-aim-400'
-                                        }`}
-                                    >
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-sm font-semibold text-aim-900">
-                                                {opt.name}
-                                            </span>
-                                            <span className="rounded bg-cyan-100 px-2 py-0.5 font-mono text-[11px] font-semibold text-cyan-900">
-                                                {opt.code}
-                                            </span>
-                                        </div>
-                                        <p className="mt-1 text-xs text-aim-600">{opt.description}</p>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    {/* 4. WIRELESS CONNECTIVITY (5G & NTN SATELLITE) */}
-                    <div className="card !p-5">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-purple-700">
-                                04 • Top Bulkhead Antennas + RF Rail
-                            </span>
-                            <span className="font-mono text-xs text-aim-500">Multi-Path Backhaul</span>
-                        </div>
-                        <h3 className="mt-1 text-lg font-semibold text-aim-900">
-                            5G Cellular &amp; NTN Satellite Connectivity
-                        </h3>
-                        <p className="mt-1 text-xs text-aim-600">
-                            Combine terrestrial 5G MIMO with Non-Terrestrial Network (NTN) satellite failover for zero-dead-zone telemetry.
-                        </p>
-
-                        <div className="mt-4 space-y-2.5">
-                            {Object.values(CONNECTIVITY_OPTIONS).map((opt) => {
-                                const active = Boolean(config[opt.id]);
-                                return (
-                                    <button
-                                        key={opt.id}
-                                        type="button"
-                                        onClick={() => handleToggleBoolean(opt.id)}
-                                        className={`w-full rounded-xl border p-3.5 text-left transition ${
-                                            active
-                                                ? 'border-aim-900 bg-aim-900/5 ring-1 ring-aim-900'
-                                                : 'border-aim-200 bg-white hover:border-aim-400'
-                                        }`}
-                                    >
-                                        <div className="flex items-center justify-between gap-2">
-                                            <div className="flex items-center gap-2.5">
-                                                <span
-                                                    className={`flex h-5 w-5 items-center justify-center rounded border text-xs font-bold ${
-                                                        active
-                                                            ? 'border-aim-900 bg-aim-900 text-white'
-                                                            : 'border-aim-300 bg-white text-transparent'
-                                                    }`}
-                                                >
-                                                    ✓
-                                                </span>
-                                                <span className="text-sm font-semibold text-aim-900">
-                                                    {opt.name}
-                                                </span>
-                                            </div>
-                                            <span className="rounded bg-purple-100 px-2 py-0.5 font-mono text-[11px] font-semibold text-purple-900">
-                                                {opt.code}
-                                            </span>
-                                        </div>
-                                        <p className="mt-1.5 pl-7 text-xs text-aim-600">
-                                            {opt.description}
+                                <div className="space-y-2.5 border-t border-aim-100 pt-4">
+                                    <div>
+                                        <h3 className="text-sm font-semibold text-aim-900">
+                                            Network Uplink
+                                        </h3>
+                                        <p className="text-xs text-aim-500">
+                                            Local copper or fiber plant backhaul.
                                         </p>
-                                    </button>
-                                );
-                            })}
-                        </div>
+                                    </div>
+                                    {NETWORK_OPTIONS.map((opt) =>
+                                        renderSingleOptionCard(
+                                            opt,
+                                            config.network === opt.id,
+                                            () => handleSelectSingle('network', opt.id)
+                                        )
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'connectivity' && (
+                            <div className="space-y-3">
+                                <div className="mb-3">
+                                    <h3 className="text-base font-semibold text-aim-900">
+                                        Wireless &amp; Satellite Backhaul
+                                    </h3>
+                                    <p className="text-xs text-aim-500">
+                                        Enable either or both for redundant remote telemetry.
+                                    </p>
+                                </div>
+                                {Object.values(CONNECTIVITY_OPTIONS).map((opt) =>
+                                    renderToggleOptionCard(
+                                        opt,
+                                        Boolean(config[opt.id]),
+                                        () => handleToggleBoolean(opt.id)
+                                    )
+                                )}
+                            </div>
+                        )}
+
+                        {activeTab === 'power' && (
+                            <div className="space-y-3">
+                                <div className="mb-3">
+                                    <h3 className="text-base font-semibold text-aim-900">
+                                        Power &amp; Backup Reserve
+                                    </h3>
+                                    <p className="text-xs text-aim-500">
+                                        Combine internal LiFePO4 backup with solar, vehicle, or grid inputs.
+                                    </p>
+                                </div>
+                                {Object.values(POWER_OPTIONS).map((opt) =>
+                                    renderToggleOptionCard(
+                                        opt,
+                                        Boolean(config[opt.id]),
+                                        () => handleToggleBoolean(opt.id)
+                                    )
+                                )}
+                            </div>
+                        )}
+
+                        {activeTab === 'storage' && (
+                            <div className="space-y-3">
+                                <div className="mb-3">
+                                    <h3 className="text-base font-semibold text-aim-900">
+                                        Industrial NVMe Storage
+                                    </h3>
+                                    <p className="text-xs text-aim-500">
+                                        Wide-temperature local SSD storage for video and telemetry.
+                                    </p>
+                                </div>
+                                {STORAGE_OPTIONS.map((opt) =>
+                                    renderSingleOptionCard(
+                                        opt,
+                                        config.storage === opt.id,
+                                        () => handleSelectSingle('storage', opt.id)
+                                    )
+                                )}
+                            </div>
+                        )}
                     </div>
 
-                    {/* 5. POWER & CHARGING ARCHITECTURE */}
-                    <div className="card !p-5">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-amber-700">
-                                05 • Lower Power Bay + External Mounts
-                            </span>
-                            <span className="font-mono text-xs text-aim-500">Hybrid Power</span>
+                    {/* Clean Selected Summary Strip */}
+                    <div className="mt-6 border-t border-aim-100 pt-5">
+                        <p className="text-xs font-medium text-aim-500">Selected Configuration</p>
+                        <div className="mt-2.5 flex flex-wrap gap-1.5">
+                            {details.selectedPills.map((pill) => (
+                                <span
+                                    key={pill}
+                                    className="rounded-md border border-aim-200 bg-aim-50 px-2.5 py-1 text-xs font-medium text-aim-700"
+                                >
+                                    {pill}
+                                </span>
+                            ))}
                         </div>
-                        <h3 className="mt-1 text-lg font-semibold text-aim-900">
-                            Power, UPS Battery &amp; Charging Architecture
-                        </h3>
-                        <p className="mt-1 text-xs text-aim-600">
-                            Mix and match internal heated LiFePO4 UPS reserves with solar MPPT, vehicle/vessel alternator DC-DC, or grid AC.
-                        </p>
 
-                        <div className="mt-4 space-y-2.5">
-                            {Object.values(POWER_OPTIONS).map((opt) => {
-                                const active = Boolean(config[opt.id]);
-                                return (
-                                    <button
-                                        key={opt.id}
-                                        type="button"
-                                        onClick={() => handleToggleBoolean(opt.id)}
-                                        className={`w-full rounded-xl border p-3.5 text-left transition ${
-                                            active
-                                                ? 'border-aim-900 bg-aim-900/5 ring-1 ring-aim-900'
-                                                : 'border-aim-200 bg-white hover:border-aim-400'
-                                        }`}
-                                    >
-                                        <div className="flex items-center justify-between gap-2">
-                                            <div className="flex items-center gap-2.5">
-                                                <span
-                                                    className={`flex h-5 w-5 items-center justify-center rounded border text-xs font-bold ${
-                                                        active
-                                                            ? 'border-aim-900 bg-aim-900 text-white'
-                                                            : 'border-aim-300 bg-white text-transparent'
-                                                    }`}
-                                                >
-                                                    ✓
-                                                </span>
-                                                <span className="text-sm font-semibold text-aim-900">
-                                                    {opt.name}
-                                                </span>
-                                            </div>
-                                            <span className="shrink-0 rounded bg-amber-100 px-2 py-0.5 font-mono text-[11px] font-semibold text-amber-900">
-                                                {opt.code}
-                                            </span>
-                                        </div>
-                                        <p className="mt-1.5 pl-7 text-xs text-aim-600">
-                                            {opt.description}
-                                        </p>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    {/* 6. LOCAL NVME DATA STORAGE */}
-                    <div className="card !p-5">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-amber-700">
-                                06 • Removable Rugged RAID Bay
-                            </span>
-                            <span className="font-mono text-xs text-aim-500">
-                                {details.storageObj.capacity}
-                            </span>
-                        </div>
-                        <h3 className="mt-1 text-lg font-semibold text-aim-900">
-                            Industrial NVMe Black-Box Storage
-                        </h3>
-                        <p className="mt-1 text-xs text-aim-600">
-                            High-endurance wide-temperature SSD canisters for zero-drop local video, telemetry, and training dataset capture.
-                        </p>
-
-                        <div className="mt-4 space-y-2.5">
-                            {STORAGE_OPTIONS.map((opt) => {
-                                const active = config.storage === opt.id;
-                                return (
-                                    <button
-                                        key={opt.id}
-                                        type="button"
-                                        onClick={() => handleSelectSingle('storage', opt.id)}
-                                        className={`w-full rounded-xl border p-3.5 text-left transition ${
-                                            active
-                                                ? 'border-aim-900 bg-aim-900/5 ring-1 ring-aim-900'
-                                                : 'border-aim-200 bg-white hover:border-aim-400'
-                                        }`}
-                                    >
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-sm font-semibold text-aim-900">
-                                                {opt.name}
-                                            </span>
-                                            <span className="rounded bg-amber-100 px-2 py-0.5 font-mono text-[11px] font-semibold text-amber-900">
-                                                {opt.capacity}
-                                            </span>
-                                        </div>
-                                        <p className="mt-1 text-xs text-aim-600">{opt.description}</p>
-                                    </button>
-                                );
-                            })}
-                        </div>
+                        <button
+                            type="button"
+                            onClick={onProceedToContact}
+                            className="btn-primary mt-5 w-full"
+                        >
+                            Inquire About This Configuration
+                        </button>
                     </div>
                 </div>
             </div>
