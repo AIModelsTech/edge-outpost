@@ -2,7 +2,7 @@ export const COMPUTE_OPTIONS = [
     {
         id: 'compact',
         name: 'Compact AI Node',
-        subtitle: '40 TOPS • Fanless low-power inference',
+        subtitle: '40 TOPS • Low-power edge inference',
         shortLabel: 'Compact 40 TOPS',
         tops: '40 TOPS',
         chassisUnits: 1,
@@ -29,23 +29,52 @@ export const CAMERA_PORT_OPTIONS = [
     {
         id: 'cam-2x',
         name: '2x PoE+ Vision Ports',
-        subtitle: '60W budget • Dual IP68 glands',
+        subtitle: '60W budget • Dual IP68 M12/RJ45 glands',
         shortLabel: '2x PoE+ Cameras',
-        count: 2,
+        poeCount: 2,
+        gmslCount: 0,
+        moduleLabel: '2x PoE+ Switch',
+        glandLabel: '2x Camera PoE',
     },
     {
         id: 'cam-4x',
         name: '4x PoE+ Managed Switch',
-        subtitle: '120W budget • Quad IP68 glands',
+        subtitle: '120W budget • Quad IP68 M12/RJ45 glands',
         shortLabel: '4x PoE+ Cameras',
-        count: 4,
+        poeCount: 4,
+        gmslCount: 0,
+        moduleLabel: '4x PoE+ Switch',
+        glandLabel: '4x Camera PoE',
+    },
+    {
+        id: 'cam-4x-gmsl',
+        name: '4x GMSL2 Coax Ports',
+        subtitle: 'Low-latency SerDes • Quad IP68 FAKRA coax',
+        shortLabel: '4x GMSL2 Coax',
+        poeCount: 0,
+        gmslCount: 4,
+        moduleLabel: '4x GMSL2 SerDes',
+        glandLabel: '4x GMSL2 FAKRA',
+    },
+    {
+        id: 'cam-8x-hybrid',
+        name: '4x GMSL2 + 4x PoE+ Hybrid',
+        subtitle: 'GMSL2 deserializer + managed PoE+ switch',
+        shortLabel: '4x GMSL2 + 4x PoE+',
+        poeCount: 4,
+        gmslCount: 4,
+        moduleLabel: '4x GMSL2 + 4x PoE+',
+        glandLabel: '4x GMSL2 + 4x PoE',
     },
     {
         id: 'cam-8x',
         name: '8x PoE++ Sensor Array',
-        subtitle: '240W budget • PTZ & LiDAR ready',
+        subtitle: '240W budget • High-power PTZ & LiDAR',
         shortLabel: '8x PoE++ Cameras',
-        count: 8,
+        poeCount: 8,
+        gmslCount: 0,
+        moduleLabel: '8x PoE++ Switch',
+        glandLabel: '8x Camera PoE++',
     },
 ];
 
@@ -70,6 +99,21 @@ export const NETWORK_OPTIONS = [
     },
 ];
 
+export const INDUSTRIAL_IO_OPTIONS = {
+    serialCan: {
+        id: 'serialCan',
+        name: 'Serial & CAN Bus Interface',
+        subtitle: 'Isolated RS-232 / RS-485 & CAN bus (J1939)',
+        shortLabel: 'RS-232/485 + CAN',
+    },
+    digitalAnalogIo: {
+        id: 'digitalAnalogIo',
+        name: 'Digital & Analog I/O Block',
+        subtitle: 'Isolated DIO, 4–20mA & 0–10V sensor I/O',
+        shortLabel: 'Digital & Analog I/O',
+    },
+};
+
 export const CONNECTIVITY_OPTIONS = {
     cellular5g: {
         id: 'cellular5g',
@@ -82,6 +126,18 @@ export const CONNECTIVITY_OPTIONS = {
         name: 'NTN Satellite Uplink',
         subtitle: 'Low-profile satellite dome failover',
         shortLabel: 'NTN Satellite',
+    },
+    wifiBle: {
+        id: 'wifiBle',
+        name: 'Wi-Fi 6E & Bluetooth 5.3',
+        subtitle: 'Local wireless AP/client & BLE gateway',
+        shortLabel: 'Wi-Fi 6E + BLE',
+    },
+    gnssRtk: {
+        id: 'gnssRtk',
+        name: 'GNSS (Multi-Band GPS / RTK)',
+        subtitle: 'High-precision L1/L2/L5 positioning',
+        shortLabel: 'GNSS / RTK GPS',
     },
 };
 
@@ -114,28 +170,31 @@ export const POWER_OPTIONS = {
 
 export const STORAGE_OPTIONS = [
     {
-        id: 'nvme-1tb',
-        name: '1 TB Industrial NVMe',
-        subtitle: 'Wide-temp SSD for rolling buffer',
-        shortLabel: '1 TB NVMe',
-        capacity: '1 TB',
-        bays: 1,
+        id: 'onboard-1tb',
+        name: 'Onboard Storage (Up to 1 TB)',
+        subtitle: 'Integrated NVMe on compute module',
+        shortLabel: 'Onboard ≤1TB NVMe',
+        capacity: 'Up to 1 TB',
+        bays: 0,
+        isOnboard: true,
     },
     {
         id: 'nvme-4tb',
-        name: '4 TB Mirrored RAID',
-        subtitle: 'Dual-bay redundant video retention',
+        name: '4 TB Mirrored NVMe RAID',
+        subtitle: 'Dual-bay redundant DIN storage module',
         shortLabel: '4 TB RAID',
         capacity: '4 TB',
         bays: 2,
+        isOnboard: false,
     },
     {
         id: 'nvme-8tb',
-        name: '8 TB+ Removable Shuttle',
-        subtitle: 'Quad hot-swap raw dataset logging',
+        name: '8 TB+ Removable RAID Bay',
+        subtitle: 'Quad hot-swap raw dataset shuttle',
         shortLabel: '8 TB+ RAID Shuttle',
         capacity: '8 TB+',
         bays: 4,
+        isOnboard: false,
     },
 ];
 
@@ -143,138 +202,42 @@ export const SECTORS = [
     {
         id: 'agriculture',
         name: 'Agriculture',
-        summary: 'Real-time crop grading, implement vision, and off-grid field mast monitoring.',
-        preset: {
-            compute: 'midrange',
-            cameras: 'cam-4x',
-            network: 'net-2gbe',
-            cellular5g: true,
-            satelliteNtn: true,
-            batteryPack: true,
-            solarMppt: true,
-            alternatorDc: true,
-            shoreAc: false,
-            storage: 'nvme-4tb',
-        },
+        summary: 'Real-time crop grading, implement vision, CAN/ISOBUS telemetry, and off-grid field monitoring.',
     },
     {
         id: 'defense',
         name: 'Defense',
         summary: 'Tactical multi-sensor ISR nodes, perimeter security, and resilient satellite backhaul.',
-        preset: {
-            compute: 'cluster',
-            cameras: 'cam-8x',
-            network: 'net-sfp',
-            cellular5g: true,
-            satelliteNtn: true,
-            batteryPack: true,
-            solarMppt: true,
-            alternatorDc: true,
-            shoreAc: false,
-            storage: 'nvme-8tb',
-        },
     },
     {
         id: 'maritime',
         name: 'Maritime',
-        summary: 'Corrosion-sealed deck safety, vessel telemetry, and offshore coastal surveillance.',
-        preset: {
-            compute: 'midrange',
-            cameras: 'cam-4x',
-            network: 'net-2gbe',
-            cellular5g: true,
-            satelliteNtn: true,
-            batteryPack: true,
-            solarMppt: false,
-            alternatorDc: true,
-            shoreAc: true,
-            storage: 'nvme-4tb',
-        },
+        summary: 'Corrosion-sealed deck safety, vessel NMEA/CAN telemetry, and offshore surveillance.',
     },
     {
         id: 'industrial',
         name: 'Industrial',
-        summary: 'Washdown-rated machine vision, defect detection, and PLC/SCADA integration.',
-        preset: {
-            compute: 'cluster',
-            cameras: 'cam-8x',
-            network: 'net-sfp',
-            cellular5g: false,
-            satelliteNtn: false,
-            batteryPack: true,
-            solarMppt: false,
-            alternatorDc: false,
-            shoreAc: true,
-            storage: 'nvme-4tb',
-        },
+        summary: 'Washdown-rated machine vision, defect detection, and direct PLC/SCADA I/O integration.',
     },
     {
         id: 'energy-mining',
         name: 'Energy & Mining',
         summary: 'Autonomous haul-road inspection, substation thermal monitoring, and pipeline security.',
-        preset: {
-            compute: 'cluster',
-            cameras: 'cam-4x',
-            network: 'net-sfp',
-            cellular5g: true,
-            satelliteNtn: true,
-            batteryPack: true,
-            solarMppt: true,
-            alternatorDc: false,
-            shoreAc: true,
-            storage: 'nvme-8tb',
-        },
     },
     {
         id: 'smart-infra',
         name: 'Smart Infrastructure',
-        summary: 'Highway corridor analytics, bridge monitoring, and remote utility telemetry.',
-        preset: {
-            compute: 'midrange',
-            cameras: 'cam-4x',
-            network: 'net-10gbe',
-            cellular5g: true,
-            satelliteNtn: false,
-            batteryPack: true,
-            solarMppt: true,
-            alternatorDc: false,
-            shoreAc: true,
-            storage: 'nvme-4tb',
-        },
+        summary: 'Highway corridor analytics, bridge monitoring, and remote utility sensor telemetry.',
     },
     {
         id: 'autonomous-fleet',
         name: 'Autonomous Fleet & Rail',
-        summary: 'Vibration-damped onboard compute for locomotives, forestry equipment, and mobile robotics.',
-        preset: {
-            compute: 'cluster',
-            cameras: 'cam-8x',
-            network: 'net-10gbe',
-            cellular5g: true,
-            satelliteNtn: true,
-            batteryPack: true,
-            solarMppt: false,
-            alternatorDc: true,
-            shoreAc: false,
-            storage: 'nvme-8tb',
-        },
+        summary: 'Vibration-damped onboard GMSL2/PoE compute, RTK positioning, and CAN bus integration.',
     },
     {
         id: 'environmental-security',
         name: 'Environmental & Perimeter',
         summary: 'Off-grid solar sentry nodes for early wildfire detection and remote perimeter security.',
-        preset: {
-            compute: 'compact',
-            cameras: 'cam-4x',
-            network: 'net-2gbe',
-            cellular5g: true,
-            satelliteNtn: true,
-            batteryPack: true,
-            solarMppt: true,
-            alternatorDc: false,
-            shoreAc: false,
-            storage: 'nvme-1tb',
-        },
     },
 ];
 
@@ -283,13 +246,17 @@ export const DEFAULT_CONFIG = {
     compute: 'midrange',
     cameras: 'cam-4x',
     network: 'net-2gbe',
+    serialCan: true,
+    digitalAnalogIo: false,
     cellular5g: true,
     satelliteNtn: true,
+    wifiBle: false,
+    gnssRtk: true,
     batteryPack: true,
     solarMppt: true,
     alternatorDc: true,
     shoreAc: false,
-    storage: 'nvme-4tb',
+    storage: 'onboard-1tb',
 };
 
 export function resolveConfigDetails(config) {
@@ -297,11 +264,17 @@ export function resolveConfigDetails(config) {
     const computeObj = COMPUTE_OPTIONS.find((c) => c.id === config.compute) || COMPUTE_OPTIONS[1];
     const camerasObj = CAMERA_PORT_OPTIONS.find((c) => c.id === config.cameras) || CAMERA_PORT_OPTIONS[1];
     const networkObj = NETWORK_OPTIONS.find((n) => n.id === config.network) || NETWORK_OPTIONS[0];
-    const storageObj = STORAGE_OPTIONS.find((s) => s.id === config.storage) || STORAGE_OPTIONS[1];
+    const storageObj = STORAGE_OPTIONS.find((s) => s.id === config.storage) || STORAGE_OPTIONS[0];
+
+    const activeIndustrialIo = [];
+    if (config.serialCan) activeIndustrialIo.push(INDUSTRIAL_IO_OPTIONS.serialCan);
+    if (config.digitalAnalogIo) activeIndustrialIo.push(INDUSTRIAL_IO_OPTIONS.digitalAnalogIo);
 
     const activeConnectivity = [];
     if (config.cellular5g) activeConnectivity.push(CONNECTIVITY_OPTIONS.cellular5g);
     if (config.satelliteNtn) activeConnectivity.push(CONNECTIVITY_OPTIONS.satelliteNtn);
+    if (config.wifiBle) activeConnectivity.push(CONNECTIVITY_OPTIONS.wifiBle);
+    if (config.gnssRtk) activeConnectivity.push(CONNECTIVITY_OPTIONS.gnssRtk);
 
     const activePower = [];
     if (config.batteryPack) activePower.push(POWER_OPTIONS.batteryPack);
@@ -313,6 +286,7 @@ export function resolveConfigDetails(config) {
         computeObj.shortLabel,
         camerasObj.shortLabel,
         networkObj.shortLabel,
+        ...activeIndustrialIo.map((io) => io.shortLabel),
         ...(activeConnectivity.length > 0
             ? activeConnectivity.map((c) => c.shortLabel)
             : ['Wired LAN Only']),
@@ -327,6 +301,11 @@ export function resolveConfigDetails(config) {
         `Compute: ${computeObj.name} (${computeObj.tops})`,
         `Cameras: ${camerasObj.name}`,
         `Network: ${networkObj.name}`,
+        `Industrial I/O: ${
+            activeIndustrialIo.length > 0
+                ? activeIndustrialIo.map((io) => io.name).join(' + ')
+                : 'None'
+        }`,
         `Connectivity: ${
             activeConnectivity.length > 0
                 ? activeConnectivity.map((c) => c.name).join(' + ')
@@ -346,6 +325,7 @@ export function resolveConfigDetails(config) {
         camerasObj,
         networkObj,
         storageObj,
+        activeIndustrialIo,
         activeConnectivity,
         activePower,
         selectedPills,

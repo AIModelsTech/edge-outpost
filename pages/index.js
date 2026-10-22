@@ -25,26 +25,18 @@ const CAPABILITIES = [
 export default function HomePage() {
     const [config, setConfig] = useState(DEFAULT_CONFIG);
 
-    const handleApplySectorPreset = (sectorId, shouldScrollToBuilder = false) => {
-        const targetSector = SECTORS.find((s) => s.id === sectorId);
-        if (!targetSector) return;
-
-        setConfig({
-            sector: targetSector.id,
-            ...targetSector.preset,
-        });
-
-        if (shouldScrollToBuilder && typeof window !== 'undefined') {
-            const el = document.getElementById('configurator');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
     const handleProceedToContact = () => {
         if (typeof window !== 'undefined') {
             const el = document.getElementById('inquire');
             if (el) el.scrollIntoView({ behavior: 'smooth' });
         }
+    };
+
+    const handleSectorChange = (sectorId) => {
+        setConfig((prev) => ({
+            ...prev,
+            sector: sectorId,
+        }));
     };
 
     return (
@@ -59,8 +51,8 @@ export default function HomePage() {
 
                         <p className="mt-6 text-lg leading-relaxed text-aim-600">
                             EdgeForge combines NEMA 4X / IP67 weather-sealed housings, conduction-cooled AI compute,
-                            PoE++ vision ports, 5G and satellite connectivity, and hybrid LiFePO4/solar power in a
-                            single deployable system.
+                            PoE++ and GMSL2 vision ports, 5G and satellite connectivity, and hybrid LiFePO4/solar power
+                            in a single deployable system.
                         </p>
 
                         <div className="mt-8 flex flex-wrap gap-3.5">
@@ -103,7 +95,7 @@ export default function HomePage() {
                             Configure your enclosure
                         </h2>
                         <p className="mt-3 text-base text-aim-600">
-                            Start from a sector preset or select your compute, camera ports, backhaul, and power modules.
+                            Select your compute, camera interfaces, industrial I/O, connectivity, and power modules.
                         </p>
                     </div>
 
@@ -111,14 +103,13 @@ export default function HomePage() {
                         <EnclosureConfigurator
                             config={config}
                             onChangeConfig={setConfig}
-                            onApplySectorPreset={(secId) => handleApplySectorPreset(secId, false)}
                             onProceedToContact={handleProceedToContact}
                         />
                     </div>
                 </div>
             </section>
 
-            {/* ================= SECTORS SECTION ================= */}
+            {/* ================= SECTORS SECTION (INFORMATIONAL) ================= */}
             <section
                 id="sectors"
                 className="scroll-mt-20 border-y border-aim-200 bg-white py-20 sm:py-24"
@@ -129,43 +120,24 @@ export default function HomePage() {
                             Deployment sectors
                         </h2>
                         <p className="mt-3 text-base text-aim-600">
-                            Select any sector to load its recommended hardware baseline in the configurator.
+                            Engineered for continuous operation across harsh outdoor, mobile, and industrial environments.
                         </p>
                     </div>
 
                     <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                        {SECTORS.map((sec) => {
-                            const isCurrent = config.sector === sec.id;
-                            return (
-                                <button
-                                    key={sec.id}
-                                    type="button"
-                                    onClick={() => handleApplySectorPreset(sec.id, true)}
-                                    className={`flex flex-col justify-between rounded-2xl border p-5 text-left transition ${
-                                        isCurrent
-                                            ? 'border-aim-900 bg-aim-50/70 ring-1 ring-aim-900'
-                                            : 'border-aim-200 bg-white hover:border-aim-300'
-                                    }`}
-                                >
-                                    <div>
-                                        <div className="flex items-center justify-between gap-2">
-                                            <h3 className="text-base font-semibold text-aim-900">
-                                                {sec.name}
-                                            </h3>
-                                            {isCurrent && (
-                                                <span className="h-2 w-2 rounded-full bg-aim-900" />
-                                            )}
-                                        </div>
-                                        <p className="mt-2 text-xs leading-relaxed text-aim-600">
-                                            {sec.summary}
-                                        </p>
-                                    </div>
-                                    <span className="mt-4 inline-block text-xs font-medium text-aim-900">
-                                        Load preset &uarr;
-                                    </span>
-                                </button>
-                            );
-                        })}
+                        {SECTORS.map((sec) => (
+                            <div
+                                key={sec.id}
+                                className="rounded-2xl border border-aim-200 bg-white p-5"
+                            >
+                                <h3 className="text-base font-semibold text-aim-900">
+                                    {sec.name}
+                                </h3>
+                                <p className="mt-2 text-xs leading-relaxed text-aim-600">
+                                    {sec.summary}
+                                </p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -218,7 +190,7 @@ export default function HomePage() {
                     <div className="mt-8 rounded-2xl border border-aim-200 bg-white p-6 shadow-sm sm:p-8">
                         <ConfigContactForm
                             config={config}
-                            onSelectSector={(secId) => handleApplySectorPreset(secId, false)}
+                            onSelectSector={handleSectorChange}
                         />
                     </div>
                 </div>

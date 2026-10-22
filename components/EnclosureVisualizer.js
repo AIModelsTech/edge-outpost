@@ -5,16 +5,29 @@ export default function EnclosureVisualizer({ config }) {
     const details = resolveConfigDetails(config);
     const { computeObj, camerasObj, networkObj, storageObj } = details;
 
-    const cameraCount = camerasObj.count;
+    const poeCount = camerasObj.poeCount;
+    const gmslCount = camerasObj.gmslCount;
+    const totalCameras = poeCount + gmslCount;
     const isFiber = networkObj.id === 'net-sfp';
     const is10GbE = networkObj.id === 'net-10gbe';
+    const hasAnyRf = Boolean(
+        config.cellular5g || config.satelliteNtn || config.wifiBle || config.gnssRtk
+    );
+    const hasAnyIo = Boolean(config.serialCan || config.digitalAnalogIo);
 
-    const activePowerModules = [
-        config.batteryPack && { id: 'battery', label: 'LiFePO4 UPS', sub: '1.2 kWh Reserve' },
-        config.solarMppt && { id: 'solar', label: 'Solar MPPT', sub: 'Charge Controller' },
-        config.alternatorDc && { id: 'alt', label: 'DC-DC Input', sub: '12 / 24 / 48V' },
-        config.shoreAc && { id: 'ac', label: 'AC-DC Supply', sub: '120 / 240V Grid' },
-    ].filter(Boolean);
+    const rfModules = [
+        { id: 'cellular5g', label: '5G NR', active: Boolean(config.cellular5g) },
+        { id: 'satelliteNtn', label: 'NTN Sat', active: Boolean(config.satelliteNtn) },
+        { id: 'wifiBle', label: 'Wi-Fi/BLE', active: Boolean(config.wifiBle) },
+        { id: 'gnssRtk', label: 'GNSS RTK', active: Boolean(config.gnssRtk) },
+    ];
+
+    const powerModules = [
+        { id: 'batteryPack', label: 'LiFePO4 UPS', active: Boolean(config.batteryPack) },
+        { id: 'solarMppt', label: 'Solar MPPT', active: Boolean(config.solarMppt) },
+        { id: 'alternatorDc', label: 'Alternator DC', active: Boolean(config.alternatorDc) },
+        { id: 'shoreAc', label: 'Grid AC-DC', active: Boolean(config.shoreAc) },
+    ];
 
     return (
         <div className="rounded-2xl border border-aim-200 bg-white p-6 shadow-sm">
@@ -25,7 +38,7 @@ export default function EnclosureVisualizer({ config }) {
                         Enclosure Architecture
                     </h3>
                     <p className="text-xs text-aim-500">
-                        NEMA 4X / IP67 Sealed Chassis • {details.sectorObj.name} Preset
+                        NEMA 4X / IP67 Sealed Chassis
                     </p>
                 </div>
                 <span className="rounded-full border border-aim-200 bg-aim-50 px-3 py-1 text-xs font-medium text-aim-700">
@@ -41,18 +54,18 @@ export default function EnclosureVisualizer({ config }) {
                     role="img"
                     aria-label="EdgeForge Enclosure Diagram"
                 >
-                    {/* ================= TOP ANTENNAS (5G & NTN SATELLITE) ================= */}
-                    {/* 5G Cellular Antennas */}
-                    <g opacity={config.cellular5g ? 1 : 0.22} className="transition-opacity duration-200">
-                        <rect x="148" y="34" width="16" height="54" rx="8" fill="#0f172a" />
-                        <rect x="184" y="42" width="16" height="46" rx="8" fill="#0f172a" />
-                        <rect x="144" y="84" width="60" height="8" rx="3" fill="#475569" />
+                    {/* ================= TOP ANTENNAS (5G, WI-FI/BLE, GNSS RTK, NTN SATELLITE) ================= */}
+                    {/* 1. 5G Cellular MIMO (Center x = 128) */}
+                    <g opacity={config.cellular5g ? 1 : 0.2} className="transition-opacity duration-200">
+                        <rect x="108" y="38" width="14" height="50" rx="7" fill="#0f172a" />
+                        <rect x="134" y="44" width="14" height="44" rx="7" fill="#0f172a" />
+                        <rect x="104" y="84" width="48" height="8" rx="3" fill="#475569" />
                         <text
-                            x="174"
-                            y="24"
+                            x="128"
+                            y="26"
                             textAnchor="middle"
                             fill="#0f172a"
-                            fontSize="11"
+                            fontSize="10.5"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -60,19 +73,50 @@ export default function EnclosureVisualizer({ config }) {
                         </text>
                     </g>
 
-                    {/* NTN Satellite Dome */}
-                    <g opacity={config.satelliteNtn ? 1 : 0.22} className="transition-opacity duration-200">
-                        <path
-                            d="M 380 86 C 380 54, 480 54, 480 86 Z"
-                            fill="#0f172a"
-                        />
-                        <rect x="412" y="84" width="36" height="8" rx="3" fill="#475569" />
+                    {/* 2. Wi-Fi 6E & Bluetooth (Center x = 236) */}
+                    <g opacity={config.wifiBle ? 1 : 0.2} className="transition-opacity duration-200">
+                        <rect x="229" y="42" width="14" height="46" rx="7" fill="#0f172a" />
+                        <rect x="220" y="84" width="32" height="8" rx="3" fill="#475569" />
                         <text
-                            x="430"
-                            y="46"
+                            x="236"
+                            y="26"
                             textAnchor="middle"
                             fill="#0f172a"
-                            fontSize="11"
+                            fontSize="10.5"
+                            fontWeight="600"
+                            fontFamily="Inter, system-ui, sans-serif"
+                        >
+                            Wi-Fi / BLE
+                        </text>
+                    </g>
+
+                    {/* 3. GNSS / RTK Multi-Band Puck (Center x = 344) */}
+                    <g opacity={config.gnssRtk ? 1 : 0.2} className="transition-opacity duration-200">
+                        <path d="M 320 84 C 320 62, 368 62, 368 84 Z" fill="#0f172a" />
+                        <rect x="330" y="84" width="28" height="8" rx="3" fill="#475569" />
+                        <text
+                            x="344"
+                            y="26"
+                            textAnchor="middle"
+                            fill="#0f172a"
+                            fontSize="10.5"
+                            fontWeight="600"
+                            fontFamily="Inter, system-ui, sans-serif"
+                        >
+                            GNSS RTK
+                        </text>
+                    </g>
+
+                    {/* 4. NTN Satellite Phased Dome (Center x = 468) */}
+                    <g opacity={config.satelliteNtn ? 1 : 0.2} className="transition-opacity duration-200">
+                        <path d="M 422 84 L 434 56 L 502 56 L 514 84 Z" fill="#0f172a" />
+                        <rect x="448" y="84" width="40" height="8" rx="3" fill="#475569" />
+                        <text
+                            x="468"
+                            y="26"
+                            textAnchor="middle"
+                            fill="#0f172a"
+                            fontSize="10.5"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -82,10 +126,8 @@ export default function EnclosureVisualizer({ config }) {
 
                     {/* ================= SIDE SOLAR PANEL SILHOUETTE ================= */}
                     <g opacity={config.solarMppt ? 1 : 0.18} className="transition-opacity duration-200">
-                        {/* Clean mounting arm */}
                         <line x1="560" y1="210" x2="604" y2="210" stroke="#64748b" strokeWidth="4" strokeLinecap="round" />
                         <line x1="560" y1="350" x2="604" y2="350" stroke="#64748b" strokeWidth="4" strokeLinecap="round" />
-                        {/* Solar panel silhouette */}
                         <rect
                             x="604"
                             y="130"
@@ -145,59 +187,76 @@ export default function EnclosureVisualizer({ config }) {
                     <rect x="560" y="330" width="6" height="28" rx="3" fill="#475569" />
 
                     {/* ================= RAIL 1 (UPPER HORIZONTAL RAIL) ================= */}
-                    {/* Rail Bar */}
-                    <line x1="92" y1="196" x2="528" y2="196" stroke="#cbd5e1" strokeWidth="6" strokeLinecap="round" />
+                    <line x1="88" y1="190" x2="532" y2="190" stroke="#cbd5e1" strokeWidth="6" strokeLinecap="round" />
 
-                    {/* Compute Module */}
-                    <g transform="translate(96, 132)">
-                        <rect
-                            x="0"
-                            y="0"
-                            width="168"
-                            height="116"
-                            rx="10"
-                            fill="#0f172a"
-                        />
+                    {/* 1. Compute Module (x=92, width=148) */}
+                    <g transform="translate(92, 132)">
+                        <rect x="0" y="0" width="148" height="116" rx="10" fill="#0f172a" />
                         <text
-                            x="16"
-                            y="30"
+                            x="14"
+                            y="26"
                             fill="#94a3b8"
-                            fontSize="10"
+                            fontSize="9.5"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             COMPUTE
                         </text>
                         <text
-                            x="16"
-                            y="54"
+                            x="14"
+                            y="48"
                             fill="#ffffff"
-                            fontSize="13"
+                            fontSize="11.5"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             {computeObj.name}
                         </text>
-                        <rect x="16" y="74" width="84" height="24" rx="6" fill="#1e293b" />
                         <text
-                            x="58"
-                            y="90"
+                            x="14"
+                            y="65"
+                            fill="#94a3b8"
+                            fontSize="10"
+                            fontFamily="Inter, system-ui, sans-serif"
+                        >
+                            {storageObj.isOnboard ? 'Onboard ≤1TB NVMe' : 'Conduction Cooled'}
+                        </text>
+                        <rect x="14" y="78" width="68" height="24" rx="5" fill="#1e293b" />
+                        <text
+                            x="48"
+                            y="94"
                             textAnchor="middle"
                             fill="#f8fafc"
-                            fontSize="11"
+                            fontSize="10"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             {computeObj.tops}
                         </text>
+                        {storageObj.isOnboard && (
+                            <g transform="translate(88, 78)">
+                                <rect x="0" y="0" width="46" height="24" rx="5" fill="#334155" />
+                                <text
+                                    x="23"
+                                    y="16"
+                                    textAnchor="middle"
+                                    fill="#e2e8f0"
+                                    fontSize="9.5"
+                                    fontWeight="600"
+                                    fontFamily="Inter, system-ui, sans-serif"
+                                >
+                                    1TB
+                                </text>
+                            </g>
+                        )}
                     </g>
 
-                    {/* PoE Vision & Network Switch Module */}
-                    <g transform="translate(278, 132)">
+                    {/* 2. Vision (PoE / GMSL2) & Network Switch Module (x=250, width=146) */}
+                    <g transform="translate(250, 132)">
                         <rect
                             x="0"
                             y="0"
-                            width="134"
+                            width="146"
                             height="116"
                             rx="10"
                             fill="#f8fafc"
@@ -206,9 +265,9 @@ export default function EnclosureVisualizer({ config }) {
                         />
                         <text
                             x="14"
-                            y="28"
+                            y="26"
                             fill="#64748b"
-                            fontSize="10"
+                            fontSize="9.5"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -216,159 +275,284 @@ export default function EnclosureVisualizer({ config }) {
                         </text>
                         <text
                             x="14"
-                            y="50"
+                            y="48"
                             fill="#0f172a"
-                            fontSize="12"
+                            fontSize="11.5"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
-                            {cameraCount}x PoE Ports
+                            {camerasObj.moduleLabel}
                         </text>
                         <text
                             x="14"
-                            y="70"
+                            y="66"
                             fill="#475569"
-                            fontSize="11"
+                            fontSize="10.5"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             {networkObj.shortLabel}
                         </text>
-                        {/* Clean Port Dots */}
-                        <g transform="translate(14, 86)">
-                            {Array.from({ length: cameraCount }).map((_, idx) => (
-                                <rect
-                                    key={idx}
-                                    x={idx * 13}
-                                    y="0"
-                                    width="9"
-                                    height="12"
-                                    rx="2.5"
-                                    fill="#0f172a"
-                                />
-                            ))}
+
+                        {/* Port Indicators: Circular Coax for GMSL2 + Rectangular RJ45 for PoE */}
+                        <g transform="translate(14, 84)">
+                            {Array.from({ length: totalCameras }).map((_, idx) => {
+                                const isGmslPort = idx < gmslCount;
+                                const xPos = idx * 14;
+                                if (isGmslPort) {
+                                    return (
+                                        <g key={idx} transform={`translate(${xPos + 5}, 6)`}>
+                                            <circle cx="0" cy="0" r="5" fill="#ffffff" stroke="#0f172a" strokeWidth="1.75" />
+                                            <circle cx="0" cy="0" r="1.75" fill="#0f172a" />
+                                        </g>
+                                    );
+                                }
+                                return (
+                                    <rect
+                                        key={idx}
+                                        x={xPos}
+                                        y="0"
+                                        width="9"
+                                        height="12"
+                                        rx="2"
+                                        fill="#0f172a"
+                                    />
+                                );
+                            })}
                         </g>
                     </g>
 
-                    {/* Wireless Backhaul Module */}
-                    <g transform="translate(426, 132)">
+                    {/* 3. RF & Positioning Hub (x=406, width=122) */}
+                    <g transform="translate(406, 132)">
                         <rect
                             x="0"
                             y="0"
-                            width="98"
-                            height="116"
-                            rx="10"
-                            fill={config.cellular5g || config.satelliteNtn ? '#f8fafc' : '#ffffff'}
-                            stroke={config.cellular5g || config.satelliteNtn ? '#0f172a' : '#cbd5e1'}
-                            strokeWidth="1.75"
-                        />
-                        <text
-                            x="14"
-                            y="28"
-                            fill="#64748b"
-                            fontSize="10"
-                            fontWeight="600"
-                            fontFamily="Inter, system-ui, sans-serif"
-                        >
-                            RF MODEM
-                        </text>
-                        <text
-                            x="14"
-                            y="52"
-                            fill="#0f172a"
-                            fontSize="12"
-                            fontWeight="600"
-                            fontFamily="Inter, system-ui, sans-serif"
-                        >
-                            {config.cellular5g && config.satelliteNtn
-                                ? '5G + Sat'
-                                : config.cellular5g
-                                ? '5G Cellular'
-                                : config.satelliteNtn
-                                ? 'NTN Sat'
-                                : 'Wired Only'}
-                        </text>
-                        <text
-                            x="14"
-                            y="72"
-                            fill="#64748b"
-                            fontSize="11"
-                            fontFamily="Inter, system-ui, sans-serif"
-                        >
-                            {config.cellular5g && config.satelliteNtn
-                                ? 'Dual Failover'
-                                : config.cellular5g || config.satelliteNtn
-                                ? 'Active Link'
-                                : 'Bypass'}
-                        </text>
-                    </g>
-
-                    {/* ================= RAIL 2 (LOWER HORIZONTAL RAIL) ================= */}
-                    {/* Rail Bar */}
-                    <line x1="92" y1="348" x2="528" y2="348" stroke="#cbd5e1" strokeWidth="6" strokeLinecap="round" />
-
-                    {/* NVMe Storage Module */}
-                    <g transform="translate(96, 284)">
-                        <rect
-                            x="0"
-                            y="0"
-                            width="136"
+                            width="122"
                             height="116"
                             rx="10"
                             fill="#f8fafc"
-                            stroke="#0f172a"
+                            stroke={hasAnyRf ? '#0f172a' : '#cbd5e1'}
                             strokeWidth="1.75"
                         />
                         <text
-                            x="14"
-                            y="28"
+                            x="12"
+                            y="26"
                             fill="#64748b"
-                            fontSize="10"
+                            fontSize="9.5"
+                            fontWeight="600"
+                            fontFamily="Inter, system-ui, sans-serif"
+                        >
+                            CONNECTIVITY
+                        </text>
+
+                        {/* Clean 2x2 Grid for 5G, NTN, Wi-Fi/BLE, GNSS RTK */}
+                        <g transform="translate(11, 38)">
+                            {rfModules.map((mod, idx) => {
+                                const col = idx % 2;
+                                const row = Math.floor(idx / 2);
+                                return (
+                                    <g key={mod.id} transform={`translate(${col * 52}, ${row * 34})`}>
+                                        <rect
+                                            x="0"
+                                            y="0"
+                                            width="48"
+                                            height="28"
+                                            rx="5"
+                                            fill={mod.active ? '#0f172a' : '#ffffff'}
+                                            stroke={mod.active ? '#0f172a' : '#e2e8f0'}
+                                            strokeWidth="1.25"
+                                        />
+                                        <text
+                                            x="24"
+                                            y="18"
+                                            textAnchor="middle"
+                                            fill={mod.active ? '#ffffff' : '#94a3b8'}
+                                            fontSize="9"
+                                            fontWeight="600"
+                                            fontFamily="Inter, system-ui, sans-serif"
+                                        >
+                                            {mod.label}
+                                        </text>
+                                    </g>
+                                );
+                            })}
+                        </g>
+                    </g>
+
+                    {/* ================= RAIL 2 (LOWER HORIZONTAL RAIL) ================= */}
+                    <line x1="88" y1="342" x2="532" y2="342" stroke="#cbd5e1" strokeWidth="6" strokeLinecap="round" />
+
+                    {/* 1. Storage Bay (x=92, width=104) */}
+                    <g transform="translate(92, 284)">
+                        <rect
+                            x="0"
+                            y="0"
+                            width="104"
+                            height="116"
+                            rx="10"
+                            fill={storageObj.isOnboard ? '#ffffff' : '#f8fafc'}
+                            stroke={storageObj.isOnboard ? '#cbd5e1' : '#0f172a'}
+                            strokeWidth="1.75"
+                            strokeDasharray={storageObj.isOnboard ? '4 3' : undefined}
+                        />
+                        <text
+                            x="12"
+                            y="26"
+                            fill="#64748b"
+                            fontSize="9.5"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             STORAGE
                         </text>
-                        <text
-                            x="14"
-                            y="52"
-                            fill="#0f172a"
-                            fontSize="13"
-                            fontWeight="600"
-                            fontFamily="Inter, system-ui, sans-serif"
-                        >
-                            {storageObj.capacity} NVMe
-                        </text>
-                        <text
-                            x="14"
-                            y="70"
-                            fill="#475569"
-                            fontSize="11"
-                            fontFamily="Inter, system-ui, sans-serif"
-                        >
-                            {storageObj.bays}x RAID {storageObj.bays > 1 ? 'Bays' : 'Bay'}
-                        </text>
-                        {/* Clean drive bay indicators */}
-                        <g transform="translate(14, 84)">
-                            {Array.from({ length: storageObj.bays }).map((_, idx) => (
-                                <rect
-                                    key={idx}
-                                    x={idx * 26}
-                                    y="0"
-                                    width="20"
-                                    height="14"
-                                    rx="3"
+                        {storageObj.isOnboard ? (
+                            <>
+                                <text
+                                    x="12"
+                                    y="50"
                                     fill="#0f172a"
-                                />
-                            ))}
-                        </g>
+                                    fontSize="11"
+                                    fontWeight="600"
+                                    fontFamily="Inter, system-ui, sans-serif"
+                                >
+                                    Onboard NVMe
+                                </text>
+                                <text
+                                    x="12"
+                                    y="68"
+                                    fill="#64748b"
+                                    fontSize="10"
+                                    fontFamily="Inter, system-ui, sans-serif"
+                                >
+                                    Up to 1 TB
+                                </text>
+                                <text
+                                    x="12"
+                                    y="86"
+                                    fill="#94a3b8"
+                                    fontSize="9.5"
+                                    fontFamily="Inter, system-ui, sans-serif"
+                                >
+                                    In Compute
+                                </text>
+                            </>
+                        ) : (
+                            <>
+                                <text
+                                    x="12"
+                                    y="50"
+                                    fill="#0f172a"
+                                    fontSize="11.5"
+                                    fontWeight="600"
+                                    fontFamily="Inter, system-ui, sans-serif"
+                                >
+                                    {storageObj.capacity} RAID
+                                </text>
+                                <text
+                                    x="12"
+                                    y="68"
+                                    fill="#475569"
+                                    fontSize="10"
+                                    fontFamily="Inter, system-ui, sans-serif"
+                                >
+                                    {storageObj.bays}x NVMe Bays
+                                </text>
+                                <g transform="translate(12, 82)">
+                                    {Array.from({ length: storageObj.bays }).map((_, idx) => (
+                                        <rect
+                                            key={idx}
+                                            x={idx * 20}
+                                            y="0"
+                                            width="15"
+                                            height="14"
+                                            rx="2.5"
+                                            fill="#0f172a"
+                                        />
+                                    ))}
+                                </g>
+                            </>
+                        )}
                     </g>
 
-                    {/* Power & UPS Bay */}
-                    <g transform="translate(246, 284)">
+                    {/* 2. Industrial I/O Module: Serial/CAN + DIO/Analog (x=206, width=104) */}
+                    <g transform="translate(206, 284)">
                         <rect
                             x="0"
                             y="0"
-                            width="278"
+                            width="104"
+                            height="116"
+                            rx="10"
+                            fill="#f8fafc"
+                            stroke={hasAnyIo ? '#0f172a' : '#cbd5e1'}
+                            strokeWidth="1.75"
+                        />
+                        <text
+                            x="12"
+                            y="26"
+                            fill="#64748b"
+                            fontSize="9.5"
+                            fontWeight="600"
+                            fontFamily="Inter, system-ui, sans-serif"
+                        >
+                            INDUSTRIAL I/O
+                        </text>
+
+                        {/* Serial & CAN Pill */}
+                        <g transform="translate(10, 38)">
+                            <rect
+                                x="0"
+                                y="0"
+                                width="84"
+                                height="28"
+                                rx="5"
+                                fill={config.serialCan ? '#0f172a' : '#ffffff'}
+                                stroke={config.serialCan ? '#0f172a' : '#e2e8f0'}
+                                strokeWidth="1.25"
+                            />
+                            <text
+                                x="42"
+                                y="18"
+                                textAnchor="middle"
+                                fill={config.serialCan ? '#ffffff' : '#94a3b8'}
+                                fontSize="9.5"
+                                fontWeight="600"
+                                fontFamily="Inter, system-ui, sans-serif"
+                            >
+                                RS-232/485 CAN
+                            </text>
+                        </g>
+
+                        {/* Digital & Analog I/O Pill */}
+                        <g transform="translate(10, 72)">
+                            <rect
+                                x="0"
+                                y="0"
+                                width="84"
+                                height="28"
+                                rx="5"
+                                fill={config.digitalAnalogIo ? '#0f172a' : '#ffffff'}
+                                stroke={config.digitalAnalogIo ? '#0f172a' : '#e2e8f0'}
+                                strokeWidth="1.25"
+                            />
+                            <text
+                                x="42"
+                                y="18"
+                                textAnchor="middle"
+                                fill={config.digitalAnalogIo ? '#ffffff' : '#94a3b8'}
+                                fontSize="9.5"
+                                fontWeight="600"
+                                fontFamily="Inter, system-ui, sans-serif"
+                            >
+                                DIO &amp; Analog
+                            </text>
+                        </g>
+                    </g>
+
+                    {/* 3. Power & Reserve Bay — Non-overlapping 2x2 Grid (x=320, width=208) */}
+                    <g transform="translate(320, 284)">
+                        <rect
+                            x="0"
+                            y="0"
+                            width="208"
                             height="116"
                             rx="10"
                             fill="#f8fafc"
@@ -376,110 +560,95 @@ export default function EnclosureVisualizer({ config }) {
                             strokeWidth="1.75"
                         />
                         <text
-                            x="16"
-                            y="28"
+                            x="12"
+                            y="26"
                             fill="#64748b"
-                            fontSize="10"
+                            fontSize="9.5"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             POWER &amp; RESERVE
                         </text>
 
-                        {activePowerModules.length > 0 ? (
-                            <g transform="translate(16, 42)">
-                                {activePowerModules.map((mod, idx) => {
-                                    const count = activePowerModules.length;
-                                    const boxWidth = Math.floor((246 - (count - 1) * 8) / count);
-                                    return (
-                                        <g key={mod.id} transform={`translate(${idx * (boxWidth + 8)}, 0)`}>
-                                            <rect
-                                                x="0"
-                                                y="0"
-                                                width={boxWidth}
-                                                height="56"
-                                                rx="6"
-                                                fill="#ffffff"
-                                                stroke="#cbd5e1"
-                                                strokeWidth="1.25"
-                                            />
-                                            <text
-                                                x={boxWidth / 2}
-                                                y="25"
-                                                textAnchor="middle"
-                                                fill="#0f172a"
-                                                fontSize="10.5"
-                                                fontWeight="600"
-                                                fontFamily="Inter, system-ui, sans-serif"
-                                            >
-                                                {mod.label}
-                                            </text>
-                                            <text
-                                                x={boxWidth / 2}
-                                                y="42"
-                                                textAnchor="middle"
-                                                fill="#64748b"
-                                                fontSize="9.5"
-                                                fontFamily="Inter, system-ui, sans-serif"
-                                            >
-                                                {mod.sub}
-                                            </text>
-                                        </g>
-                                    );
-                                })}
-                            </g>
-                        ) : (
-                            <text
-                                x="16"
-                                y="64"
-                                fill="#64748b"
-                                fontSize="12"
-                                fontFamily="Inter, system-ui, sans-serif"
-                            >
-                                Direct 24V DC Input
-                            </text>
-                        )}
+                        <g transform="translate(12, 38)">
+                            {powerModules.map((mod, idx) => {
+                                const col = idx % 2;
+                                const row = Math.floor(idx / 2);
+                                return (
+                                    <g key={mod.id} transform={`translate(${col * 95}, ${row * 34})`}>
+                                        <rect
+                                            x="0"
+                                            y="0"
+                                            width="89"
+                                            height="28"
+                                            rx="5"
+                                            fill={mod.active ? '#0f172a' : '#ffffff'}
+                                            stroke={mod.active ? '#0f172a' : '#e2e8f0'}
+                                            strokeWidth="1.25"
+                                        />
+                                        <text
+                                            x="44.5"
+                                            y="18"
+                                            textAnchor="middle"
+                                            fill={mod.active ? '#ffffff' : '#94a3b8'}
+                                            fontSize="9.5"
+                                            fontWeight="600"
+                                            fontFamily="Inter, system-ui, sans-serif"
+                                        >
+                                            {mod.label}
+                                        </text>
+                                    </g>
+                                );
+                            })}
+                        </g>
                     </g>
 
                     {/* ================= BOTTOM GLAND PLATE & PORT INDICATORS ================= */}
-                    <rect x="104" y="460" width="412" height="10" rx="4" fill="#0f172a" />
+                    <rect x="88" y="460" width="444" height="10" rx="4" fill="#0f172a" />
 
-                    {/* Camera Gland Indicators (Left) */}
-                    <g transform="translate(120, 470)">
-                        {Array.from({ length: cameraCount }).map((_, idx) => (
-                            <rect
-                                key={idx}
-                                x={idx * 18}
-                                y="0"
-                                width="12"
-                                height="18"
-                                rx="3"
-                                fill="#0f172a"
-                            />
-                        ))}
+                    {/* 1. Camera Gland Indicators (Center x = 152) */}
+                    <g>
+                        <g transform={`translate(${152 - (totalCameras * 14 - 4) / 2}, 470)`}>
+                            {Array.from({ length: totalCameras }).map((_, idx) => {
+                                const isGmslPort = idx < gmslCount;
+                                return (
+                                    <rect
+                                        key={idx}
+                                        x={idx * 14}
+                                        y="0"
+                                        width="10"
+                                        height="16"
+                                        rx={isGmslPort ? '5' : '2.5'}
+                                        fill={isGmslPort ? '#ffffff' : '#0f172a'}
+                                        stroke="#0f172a"
+                                        strokeWidth={isGmslPort ? '2' : '0'}
+                                    />
+                                );
+                            })}
+                        </g>
                         <text
-                            x={Math.max(36, (cameraCount * 18) / 2 - 3)}
-                            y="36"
+                            x="152"
+                            y="506"
                             textAnchor="middle"
                             fill="#334155"
-                            fontSize="11"
+                            fontSize="10.5"
                             fontWeight="500"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
-                            {cameraCount}x Camera PoE
+                            {camerasObj.glandLabel}
                         </text>
                     </g>
 
-                    {/* Network Uplink Gland Indicators (Center) */}
-                    <g transform="translate(310, 470)">
-                        <rect x="0" y="0" width="16" height="18" rx="3" fill="#334155" />
-                        <rect x="22" y="0" width="16" height="18" rx="3" fill="#334155" />
+                    {/* 2. Network Uplink Gland Indicators (Center x = 276) */}
+                    <g>
+                        <rect x="260" y="470" width="14" height="16" rx="2.5" fill="#334155" />
+                        <rect x="278" y="470" width="14" height="16" rx="2.5" fill="#334155" />
                         <text
-                            x="19"
-                            y="36"
+                            x="276"
+                            y="506"
                             textAnchor="middle"
                             fill="#334155"
-                            fontSize="11"
+                            fontSize="10.5"
                             fontWeight="500"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
@@ -487,18 +656,49 @@ export default function EnclosureVisualizer({ config }) {
                         </text>
                     </g>
 
-                    {/* Power Gland Indicators (Right) */}
-                    <g transform="translate(432, 470)">
-                        <rect x="0" y="0" width="16" height="18" rx="3" fill="#475569" />
-                        {(config.solarMppt || config.alternatorDc || config.shoreAc) && (
-                            <rect x="22" y="0" width="16" height="18" rx="3" fill="#475569" />
-                        )}
+                    {/* 3. Serial / CAN / I/O Gland Indicators (Center x = 382) */}
+                    <g opacity={hasAnyIo ? 1 : 0.3}>
+                        <rect
+                            x="366"
+                            y="470"
+                            width="14"
+                            height="16"
+                            rx="2.5"
+                            fill={config.serialCan ? '#0f172a' : '#94a3b8'}
+                        />
+                        <rect
+                            x="384"
+                            y="470"
+                            width="14"
+                            height="16"
+                            rx="2.5"
+                            fill={config.digitalAnalogIo ? '#0f172a' : '#94a3b8'}
+                        />
                         <text
-                            x="19"
-                            y="36"
+                            x="382"
+                            y="506"
                             textAnchor="middle"
                             fill="#334155"
-                            fontSize="11"
+                            fontSize="10.5"
+                            fontWeight="500"
+                            fontFamily="Inter, system-ui, sans-serif"
+                        >
+                            Serial / CAN / I/O
+                        </text>
+                    </g>
+
+                    {/* 4. Power Gland Indicators (Center x = 486) */}
+                    <g>
+                        <rect x="470" y="470" width="14" height="16" rx="2.5" fill="#475569" />
+                        {(config.solarMppt || config.alternatorDc || config.shoreAc) && (
+                            <rect x="488" y="470" width="14" height="16" rx="2.5" fill="#475569" />
+                        )}
+                        <text
+                            x="486"
+                            y="506"
+                            textAnchor="middle"
+                            fill="#334155"
+                            fontSize="10.5"
                             fontWeight="500"
                             fontFamily="Inter, system-ui, sans-serif"
                         >

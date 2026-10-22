@@ -41,7 +41,7 @@ export default function Navbar() {
                             rel="noopener noreferrer"
                             className="text-sm text-aim-500 transition hover:text-aim-900"
                         >
-                            aimodels.ca &nearr;
+                            aimodels.ca ↗
                         </a>
                     </li>
                     <li>
@@ -89,7 +89,7 @@ export default function Navbar() {
                                 rel="noopener noreferrer"
                                 className="block text-sm text-aim-500 hover:text-aim-900"
                             >
-                                aimodels.ca &nearr;
+                                aimodels.ca ↗
                             </a>
                         </li>
                         <li className="pt-2">

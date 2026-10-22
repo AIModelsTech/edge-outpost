@@ -38,13 +38,13 @@ export default function Footer() {
                             rel="noopener noreferrer"
                             className="transition hover:text-aim-900"
                         >
-                            aimodels.ca &nearr;
+                            aimodels.ca ↗
                         </a>
                     </div>
                 </div>
 
                 <div className="mt-8 border-t border-aim-100 pt-6 text-xs text-aim-400">
-                    &copy; {new Date().getFullYear()} AIModels Tech Inc. All rights reserved.
+                    © {new Date().getFullYear()} AIModels Tech Inc. All rights reserved.
                 </div>
             </div>
         </footer>
