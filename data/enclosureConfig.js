@@ -1,7 +1,7 @@
 export const COMPUTE_OPTIONS = [
     {
         id: 'compact',
-        name: 'Compact AI Node',
+        name: 'Compact AI Module',
         subtitle: '40 TOPS • Low-power edge inference',
         shortLabel: 'Compact 40 TOPS',
         tops: '40 TOPS',
@@ -17,18 +17,18 @@ export const COMPUTE_OPTIONS = [
     },
     {
         id: 'cluster',
-        name: 'Industrial GPU Cluster',
-        subtitle: '275–550 TOPS • Multi-sensor & LiDAR fusion',
-        shortLabel: 'GPU Cluster 550 TOPS',
-        tops: '550 TOPS',
+        name: 'High-Density AI Module',
+        subtitle: '275–550 TOPS • Multi-camera & sensor fusion',
+        shortLabel: 'High-Density 275+ TOPS',
+        tops: '275+ TOPS',
         chassisUnits: 3,
     },
     {
         id: 'thor',
-        name: 'Jetson Thor AI Module',
-        subtitle: 'Up to 2,070 TOPS • Physical AI & multi-modal',
-        shortLabel: 'Jetson Thor 2,070 TOPS',
-        tops: '2,070 TOPS',
+        name: 'Ultra-Compute AI Module',
+        subtitle: '2,000+ TOPS • Physical AI & multi-modal models',
+        shortLabel: 'Ultra-Compute 2,000+ TOPS',
+        tops: '2,000+ TOPS',
         chassisUnits: 4,
     },
 ];
@@ -77,7 +77,7 @@ export const CAMERA_PORT_OPTIONS = [
     {
         id: 'cam-8x',
         name: '8x PoE++ Sensor Array',
-        subtitle: '240W budget • High-power PTZ & LiDAR',
+        subtitle: '240W budget • High-power PTZ & 3D sensors',
         shortLabel: '8x PoE++ Cameras',
         poeCount: 8,
         gmslCount: 0,

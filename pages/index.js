@@ -44,24 +44,131 @@ export default function HomePage() {
             {/* ================= CLEAN HERO SECTION ================= */}
             <section className="border-b border-aim-200 bg-white">
                 <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-                    <div className="max-w-3xl">
-                        <h1 className="text-4xl font-semibold tracking-tight text-aim-900 sm:text-5xl lg:text-6xl">
-                            Rugged Edge AI enclosures, built for the field.
-                        </h1>
+                    <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+                        <div className="lg:col-span-7">
+                            <h1 className="text-4xl font-semibold tracking-tight text-aim-900 sm:text-5xl lg:text-6xl">
+                                Rugged Edge AI enclosures, built for the field.
+                            </h1>
 
-                        <p className="mt-6 text-lg leading-relaxed text-aim-600">
-                            EdgeForge combines NEMA 4X weather-sealed housings, conduction-cooled AI compute,
-                            PoE++ and GMSL2 vision ports, 5G and satellite connectivity, and hybrid LiFePO4/solar power
-                            in a single deployable system.
-                        </p>
+                            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-aim-600">
+                                EdgeForge combines NEMA 4X weather-sealed housings, conduction-cooled AI compute,
+                                PoE++ and GMSL2 vision ports, 5G and satellite connectivity, and hybrid LiFePO4/solar power
+                                in a single deployable system.
+                            </p>
 
-                        <div className="mt-8 flex flex-wrap gap-3.5">
-                            <a href="#configurator" className="btn-primary">
-                                Configure Enclosure
-                            </a>
-                            <a href="#inquire" className="btn-secondary">
-                                Contact Engineering
-                            </a>
+                            <div className="mt-8 flex flex-wrap gap-3.5">
+                                <a href="#configurator" className="btn-primary">
+                                    Configure Enclosure
+                                </a>
+                                <a href="#inquire" className="btn-secondary">
+                                    Contact Engineering
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Right: Minimal Architectural Hardware Illustration */}
+                        <div className="lg:col-span-5">
+                            <div className="mx-auto max-w-sm rounded-2xl border border-aim-200 bg-aim-50/60 p-6">
+                                <svg
+                                    viewBox="0 0 360 320"
+                                    className="h-auto w-full select-none"
+                                    role="img"
+                                    aria-label="EdgeForge NEMA 4X Enclosure Illustration"
+                                >
+                                    {/* Top Mounting Flange */}
+                                    <rect x="88" y="42" width="184" height="10" rx="3" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="1.25" />
+                                    <circle cx="104" cy="47" r="2" fill="#64748b" />
+                                    <circle cx="256" cy="47" r="2" fill="#64748b" />
+
+                                    {/* Top Antennas (5G MIMO, GNSS, Satellite) */}
+                                    <rect x="96" y="14" width="10" height="32" rx="5" fill="#0f172a" />
+                                    <rect x="114" y="20" width="10" height="26" rx="5" fill="#0f172a" />
+                                    <path d="M 164 46 C 164 32, 196 32, 196 46 Z" fill="#0f172a" />
+                                    <path d="M 218 46 L 226 26 L 266 26 L 274 46 Z" fill="#0f172a" />
+
+                                    {/* Main NEMA 4X Sealed Chassis */}
+                                    <rect
+                                        x="64"
+                                        y="48"
+                                        width="232"
+                                        height="224"
+                                        rx="16"
+                                        fill="#ffffff"
+                                        stroke="#0f172a"
+                                        strokeWidth="2.25"
+                                    />
+
+                                    {/* Recessed Door Perimeter */}
+                                    <rect
+                                        x="76"
+                                        y="60"
+                                        width="208"
+                                        height="200"
+                                        rx="10"
+                                        fill="#f8fafc"
+                                        stroke="#cbd5e1"
+                                        strokeWidth="1.25"
+                                    />
+
+                                    {/* Left Heavy-Duty Hinges */}
+                                    <rect x="58" y="84" width="6" height="26" rx="2.5" fill="#475569" />
+                                    <rect x="58" y="210" width="6" height="26" rx="2.5" fill="#475569" />
+
+                                    {/* Right Quarter-Turn Latches */}
+                                    <rect x="296" y="106" width="5" height="22" rx="2" fill="#475569" />
+                                    <rect x="296" y="192" width="5" height="22" rx="2" fill="#475569" />
+
+                                    {/* Upper Internal Rail Silhouette */}
+                                    <line x1="88" y1="114" x2="272" y2="114" stroke="#e2e8f0" strokeWidth="4" strokeLinecap="round" />
+                                    <rect x="92" y="76" width="76" height="68" rx="7" fill="#0f172a" />
+                                    <rect x="102" y="90" width="36" height="6" rx="3" fill="#38bdf8" />
+                                    <rect x="102" y="102" width="52" height="5" rx="2.5" fill="#475569" />
+                                    <rect x="102" y="120" width="28" height="12" rx="3" fill="#1e293b" />
+
+                                    <rect x="176" y="76" width="52" height="68" rx="7" fill="#ffffff" stroke="#0f172a" strokeWidth="1.5" />
+                                    <rect x="186" y="90" width="28" height="5" rx="2.5" fill="#0f172a" />
+                                    <rect x="186" y="102" width="32" height="4" rx="2" fill="#94a3b8" />
+                                    <g transform="translate(186, 120)">
+                                        <rect x="0" y="0" width="6" height="8" rx="1.5" fill="#0f172a" />
+                                        <rect x="9" y="0" width="6" height="8" rx="1.5" fill="#0f172a" />
+                                        <rect x="18" y="0" width="6" height="8" rx="1.5" fill="#0f172a" />
+                                        <rect x="27" y="0" width="6" height="8" rx="1.5" fill="#0f172a" />
+                                    </g>
+
+                                    <rect x="236" y="76" width="32" height="68" rx="7" fill="#ffffff" stroke="#0f172a" strokeWidth="1.5" />
+                                    <circle cx="252" cy="96" r="3" fill="#10b981" />
+                                    <circle cx="252" cy="110" r="3" fill="#0284c7" />
+                                    <circle cx="252" cy="124" r="3" fill="#0f172a" />
+
+                                    {/* Lower Internal Rail Silhouette */}
+                                    <line x1="88" y1="204" x2="272" y2="204" stroke="#e2e8f0" strokeWidth="4" strokeLinecap="round" />
+                                    <rect x="92" y="164" width="58" height="68" rx="7" fill="#ffffff" stroke="#0f172a" strokeWidth="1.5" />
+                                    <rect x="102" y="178" width="34" height="5" rx="2.5" fill="#0f172a" />
+                                    <rect x="102" y="190" width="24" height="4" rx="2" fill="#94a3b8" />
+                                    <rect x="102" y="206" width="16" height="12" rx="2" fill="#0f172a" />
+                                    <rect x="122" y="206" width="16" height="12" rx="2" fill="#0f172a" />
+
+                                    <rect x="158" y="164" width="110" height="68" rx="7" fill="#ffffff" stroke="#0f172a" strokeWidth="1.5" />
+                                    <rect x="168" y="176" width="42" height="20" rx="4" fill="#0f172a" />
+                                    <rect x="216" y="176" width="42" height="20" rx="4" fill="#0f172a" />
+                                    <rect x="168" y="202" width="42" height="20" rx="4" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="1" />
+                                    <rect x="216" y="202" width="42" height="20" rx="4" fill="#0f172a" />
+
+                                    {/* Bottom Mounting Flange & Sealed Gland Ports */}
+                                    <rect x="88" y="272" width="184" height="8" rx="3" fill="#0f172a" />
+                                    <g transform="translate(102, 280)">
+                                        <rect x="0" y="0" width="8" height="14" rx="2" fill="#0f172a" />
+                                        <rect x="14" y="0" width="8" height="14" rx="2" fill="#0f172a" />
+                                        <rect x="28" y="0" width="8" height="14" rx="2" fill="#0f172a" />
+                                        <rect x="42" y="0" width="8" height="14" rx="2" fill="#0f172a" />
+                                        <rect x="68" y="0" width="10" height="14" rx="2" fill="#334155" />
+                                        <rect x="84" y="0" width="10" height="14" rx="2" fill="#334155" />
+                                        <rect x="112" y="0" width="10" height="14" rx="2" fill="#475569" />
+                                        <rect x="128" y="0" width="10" height="14" rx="2" fill="#475569" />
+                                        <rect x="144" y="0" width="10" height="14" rx="2" fill="#475569" />
+                                    </g>
+                                </svg>
+                            </div>
                         </div>
                     </div>
 
@@ -72,8 +179,8 @@ export default function HomePage() {
                             <p className="mt-1 text-sm text-aim-500">Weather &amp; washdown sealed</p>
                         </div>
                         <div>
-                            <p className="text-2xl font-semibold tracking-tight text-aim-900">Up to 2,070 TOPS</p>
-                            <p className="mt-1 text-sm text-aim-500">Compact node to Jetson Thor</p>
+                            <p className="text-2xl font-semibold tracking-tight text-aim-900">2,000+ TOPS</p>
+                            <p className="mt-1 text-sm text-aim-500">Scalable edge AI compute</p>
                         </div>
                         <div>
                             <p className="text-2xl font-semibold tracking-tight text-aim-900">5G + Satellite</p>

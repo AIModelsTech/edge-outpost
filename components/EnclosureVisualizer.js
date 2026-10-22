@@ -243,7 +243,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             x="14"
                             y="48"
                             fill="#ffffff"
-                            fontSize="11.5"
+                            fontSize="11"
                             fontWeight="600"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
