@@ -13,7 +13,8 @@ import {
 
 const TABS = [
     { id: 'compute', label: 'Compute' },
-    { id: 'network', label: 'Cameras, Network & I/O' },
+    { id: 'network', label: 'Cameras & Network' },
+    { id: 'io', label: 'Industrial I/O' },
     { id: 'connectivity', label: 'Connectivity' },
     { id: 'power', label: 'Power' },
     { id: 'storage', label: 'Storage' },
@@ -188,24 +189,26 @@ export default function EnclosureConfigurator({
                                     )
                                 )}
                             </div>
+                        </div>
+                    )}
 
-                            <div className="space-y-2.5 border-t border-aim-100 pt-4">
-                                <div>
-                                    <h3 className="text-sm font-semibold text-aim-900">
-                                        Serial, CAN Bus &amp; Industrial I/O
-                                    </h3>
-                                    <p className="text-xs text-aim-500">
-                                        Isolated fieldbus, vehicle CAN, and PLC sensor interfaces.
-                                    </p>
-                                </div>
-                                {Object.values(INDUSTRIAL_IO_OPTIONS).map((opt) =>
-                                    renderToggleOptionCard(
-                                        opt,
-                                        Boolean(config[opt.id]),
-                                        () => handleToggleBoolean(opt.id)
-                                    )
-                                )}
+                    {activeTab === 'io' && (
+                        <div className="space-y-3">
+                            <div className="mb-3">
+                                <h3 className="text-base font-semibold text-aim-900">
+                                    Industrial I/O &amp; Fieldbus
+                                </h3>
+                                <p className="text-xs text-aim-500">
+                                    Isolated RS-232/485 serial, CAN bus, and digital/analog PLC sensor interfaces.
+                                </p>
                             </div>
+                            {Object.values(INDUSTRIAL_IO_OPTIONS).map((opt) =>
+                                renderToggleOptionCard(
+                                    opt,
+                                    Boolean(config[opt.id]),
+                                    () => handleToggleBoolean(opt.id)
+                                )
+                            )}
                         </div>
                     )}
 

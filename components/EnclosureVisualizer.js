@@ -22,6 +22,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
 
     const isComputeActive = activeTab === 'compute';
     const isNetworkActive = activeTab === 'network';
+    const isIoActive = activeTab === 'io';
     const isConnectivityActive = activeTab === 'connectivity';
     const isPowerActive = activeTab === 'power';
     const isStorageActive = activeTab === 'storage';
@@ -159,7 +160,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             rx="12"
                             fill="#f8fafc"
                             stroke={isPowerActive ? '#0284c7' : '#0f172a'}
-                            strokeWidth={isPowerActive ? '2.5' : '2'}
+                            strokeWidth={isPowerActive ? '2.25' : '2'}
                         />
                         <line x1="666" y1="146" x2="666" y2="374" stroke="#cbd5e1" strokeWidth="1.5" />
                         <line x1="618" y1="202" x2="714" y2="202" stroke="#cbd5e1" strokeWidth="1.5" />
@@ -218,19 +219,16 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         onClick={(e) => handleTabClick('compute', e)}
                         className="cursor-pointer"
                     >
-                        {isComputeActive && (
-                            <rect
-                                x="-3"
-                                y="-3"
-                                width="154"
-                                height="122"
-                                rx="12"
-                                fill="none"
-                                stroke="#0284c7"
-                                strokeWidth="2"
-                            />
-                        )}
-                        <rect x="0" y="0" width="148" height="116" rx="10" fill="#0f172a" />
+                        <rect
+                            x="0"
+                            y="0"
+                            width="148"
+                            height="116"
+                            rx="10"
+                            fill="#0f172a"
+                            stroke={isComputeActive ? '#0284c7' : '#0f172a'}
+                            strokeWidth={isComputeActive ? '2.25' : '1.75'}
+                        />
                         <text
                             x="14"
                             y="26"
@@ -309,18 +307,6 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         onClick={(e) => handleTabClick('network', e)}
                         className="cursor-pointer"
                     >
-                        {isNetworkActive && (
-                            <rect
-                                x="-3"
-                                y="-3"
-                                width="152"
-                                height="122"
-                                rx="12"
-                                fill="none"
-                                stroke="#0284c7"
-                                strokeWidth="2"
-                            />
-                        )}
                         <rect
                             x="0"
                             y="0"
@@ -329,7 +315,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             rx="10"
                             fill="#f8fafc"
                             stroke={isNetworkActive ? '#0284c7' : '#0f172a'}
-                            strokeWidth="1.75"
+                            strokeWidth={isNetworkActive ? '2.25' : '1.75'}
                         />
                         <text
                             x="14"
@@ -395,18 +381,6 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         onClick={(e) => handleTabClick('connectivity', e)}
                         className="cursor-pointer"
                     >
-                        {isConnectivityActive && (
-                            <rect
-                                x="-3"
-                                y="-3"
-                                width="128"
-                                height="122"
-                                rx="12"
-                                fill="none"
-                                stroke="#0284c7"
-                                strokeWidth="2"
-                            />
-                        )}
                         <rect
                             x="0"
                             y="0"
@@ -415,7 +389,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             rx="10"
                             fill="#f8fafc"
                             stroke={isConnectivityActive ? '#0284c7' : hasAnyRf ? '#0f172a' : '#cbd5e1'}
-                            strokeWidth="1.75"
+                            strokeWidth={isConnectivityActive ? '2.25' : '1.75'}
                         />
                         <text
                             x="12"
@@ -471,18 +445,6 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         onClick={(e) => handleTabClick('storage', e)}
                         className="cursor-pointer"
                     >
-                        {isStorageActive && (
-                            <rect
-                                x="-3"
-                                y="-3"
-                                width="110"
-                                height="122"
-                                rx="12"
-                                fill="none"
-                                stroke="#0284c7"
-                                strokeWidth="2"
-                            />
-                        )}
                         <rect
                             x="0"
                             y="0"
@@ -491,7 +453,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             rx="10"
                             fill={storageObj.isOnboard ? '#ffffff' : '#f8fafc'}
                             stroke={isStorageActive ? '#0284c7' : storageObj.isOnboard ? '#cbd5e1' : '#0f172a'}
-                            strokeWidth="1.75"
+                            strokeWidth={isStorageActive ? '2.25' : '1.75'}
                             strokeDasharray={storageObj.isOnboard && !isStorageActive ? '4 3' : undefined}
                         />
                         <text
@@ -576,21 +538,9 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                     {/* 2. Industrial I/O Module: Serial/CAN + DIO/Analog (x=206, width=104) */}
                     <g
                         transform="translate(206, 284)"
-                        onClick={(e) => handleTabClick('network', e)}
+                        onClick={(e) => handleTabClick('io', e)}
                         className="cursor-pointer"
                     >
-                        {isNetworkActive && (
-                            <rect
-                                x="-3"
-                                y="-3"
-                                width="110"
-                                height="122"
-                                rx="12"
-                                fill="none"
-                                stroke="#0284c7"
-                                strokeWidth="2"
-                            />
-                        )}
                         <rect
                             x="0"
                             y="0"
@@ -598,8 +548,8 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             height="116"
                             rx="10"
                             fill="#f8fafc"
-                            stroke={isNetworkActive ? '#0284c7' : hasAnyIo ? '#0f172a' : '#cbd5e1'}
-                            strokeWidth="1.75"
+                            stroke={isIoActive ? '#0284c7' : hasAnyIo ? '#0f172a' : '#cbd5e1'}
+                            strokeWidth={isIoActive ? '2.25' : '1.75'}
                         />
                         <text
                             x="12"
@@ -669,18 +619,6 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                         onClick={(e) => handleTabClick('power', e)}
                         className="cursor-pointer"
                     >
-                        {isPowerActive && (
-                            <rect
-                                x="-3"
-                                y="-3"
-                                width="214"
-                                height="122"
-                                rx="12"
-                                fill="none"
-                                stroke="#0284c7"
-                                strokeWidth="2"
-                            />
-                        )}
                         <rect
                             x="0"
                             y="0"
@@ -689,7 +627,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             rx="10"
                             fill="#f8fafc"
                             stroke={isPowerActive ? '#0284c7' : '#0f172a'}
-                            strokeWidth="1.75"
+                            strokeWidth={isPowerActive ? '2.25' : '1.75'}
                         />
                         <text
                             x="12"
@@ -799,7 +737,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                     {/* 3. Serial / CAN / I/O Gland Indicators (Center x = 382) */}
                     <g
                         opacity={hasAnyIo ? 1 : 0.35}
-                        onClick={(e) => handleTabClick('network', e)}
+                        onClick={(e) => handleTabClick('io', e)}
                         className="cursor-pointer"
                     >
                         <rect x="336" y="468" width="92" height="46" fill="transparent" />
@@ -823,9 +761,9 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             x="382"
                             y="506"
                             textAnchor="middle"
-                            fill={isNetworkActive ? '#0284c7' : '#334155'}
+                            fill={isIoActive ? '#0284c7' : '#334155'}
                             fontSize="10.5"
-                            fontWeight={isNetworkActive ? '600' : '500'}
+                            fontWeight={isIoActive ? '600' : '500'}
                             fontFamily="Inter, system-ui, sans-serif"
                         >
                             Serial / CAN / I/O
