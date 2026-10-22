@@ -51,7 +51,7 @@ export default function HomePage() {
                             </h1>
 
                             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-aim-600">
-                                Edge Outpost combines NEMA 4X weather-sealed housings, conduction-cooled AI compute,
+                                Edge Outpost combines NEMA 4X weather-sealed housings, scalable edge AI compute,
                                 PoE++ and GMSL2 vision ports, 5G and satellite connectivity, and hybrid LiFePO4/solar power
                                 in a single deployable system.
                             </p>

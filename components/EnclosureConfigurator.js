@@ -139,7 +139,7 @@ export default function EnclosureConfigurator({
                                     Edge AI Compute
                                 </h3>
                                 <p className="text-xs text-aim-500">
-                                    Conduction-cooled neural compute module on the upper rail.
+                                    Industrial neural compute module on the upper rail.
                                 </p>
                             </div>
                             {COMPUTE_OPTIONS.map((opt) =>

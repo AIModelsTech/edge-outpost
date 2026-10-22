@@ -252,7 +252,7 @@ export default function EnclosureVisualizer({ config, activeTab = 'compute', onS
                             fontSize="9.5"
                             fontFamily="Inter, system-ui, sans-serif"
                         >
-                            {storageObj.isOnboard ? 'Onboard ≤1TB NVMe' : 'Conduction Cooled'}
+                            {storageObj.isOnboard ? 'Onboard ≤1TB NVMe' : 'Dedicated RAID Bay'}
                         </text>
                         <rect x="14" y="78" width="78" height="24" rx="5" fill="#1e293b" />
                         <text
